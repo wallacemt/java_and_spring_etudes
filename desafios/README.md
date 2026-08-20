@@ -22,6 +22,7 @@ google-chrome --headless --disable-gpu --no-sandbox \
 
 ## Índice
 
-| # | Desafio | Nível | Solução em |
-|---|---------|-------|-----------|
-| 01 | [Acervo da Quarentena](01-acervo-da-quarentena.pdf) | Difícil | `java/04-colecoes-streams/acervo-da-quarentena/` |
+| # | Desafio | Nível | Solução em | Status |
+|---|---------|-------|-----------|--------|
+| 01 | [Acervo da Quarentena](01-acervo-da-quarentena.pdf) | Difícil | `java/04-colecoes-streams/acervo-da-quarentena/src/` | Aprovado — 74/100 |
+| 02 | [A Rede de Segurança](02-a-rede-de-seguranca.pdf) | Médio | `java/04-colecoes-streams/acervo-da-quarentena/test/` | Proposto |

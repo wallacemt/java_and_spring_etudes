@@ -6,6 +6,7 @@ import entities.Serie;
 import exceptions.DuplicatedItemException;
 import exceptions.NotFoundItemException;
 import utils.Conservation;
+import utils.ItemType;
 
 import java.util.*;
 import java.text.DecimalFormat;
@@ -23,8 +24,8 @@ public class Main {
         CollectionStore collectionStore = new CollectionStore();
         // Montar collectionStore de exemplo
         try {
-            collectionStore.catalog(new MusicalScore("PT-001", "Concerto para violino em G minor",
-                    1717, Conservation.INTACT, "A. Vivaldi", 4, 42, 120));
+            collectionStore.catalog(new MusicalScore("PT-001", "Prelúdio em Sol",
+                    1717, Conservation.INTACT, "J. S. Bach", 4, 42, 60));
             collectionStore.catalog(new MusicalScore("PT-002", "Take On Me (arranjo p/ violino)", 1985,
                     Conservation.WORN, "a-ha", 2, 96, 84));
             collectionStore.catalog(new MusicalScore("PT-003", "Future Days", 2013,
@@ -50,7 +51,7 @@ public class Main {
     }
 
     private static void printReport(CollectionStore collectionStore) {
-        System.out.println("=== collectionStore DA QUARENTENA — JACKSON, WY ===");
+        System.out.println("=== Relatório principal DA QUARENTENA — JACKSON, WY ===");
         System.out.println("Itens catalogados: " + collectionStore.obterTotalItens());
 
         double totalDuration = collectionStore.getTotalDuration();
@@ -62,14 +63,12 @@ public class Main {
         // Agrupar por tipo
         System.out.println("\n--- POR TIPO ---");
         Map<String, List<Item>> byType = collectionStore.groupedByType();
-        String[] tipos = {"Partitura", "Filme", "Serie"};
-        for (String tipo : tipos) {
-            if (byType.containsKey(tipo)) {
-                List<Item> itens = byType.get(tipo);
-                System.out.println(tipo + " (" + itens.size() + ")");
-                for (Item item : itens) {
-                    System.out.println("  " + item.describe());
-                }
+
+        for (Map.Entry<String, List<Item>> entry : byType.entrySet()) {
+            System.out.println(entry.getKey() + " (" + entry.getValue().size() + ")");
+
+            for (Item item : entry.getValue()) {
+                System.out.println("  " + item.describe());
             }
         }
 
@@ -83,7 +82,7 @@ public class Main {
 
     private static void printSession(CollectionStore collectionStore, double minutos) {
         try {
-            List<Item> session = collectionStore.nigthSession(minutos);
+            List<Item> session = collectionStore.nightSession(minutos);
             double totalSessao = 0;
 
             for (Item item : session) {
@@ -97,7 +96,7 @@ public class Main {
             if (session.isEmpty()) {
                 System.out.println("  Nenhum item cabe.");
             } else {
-                System.out.println("  Restam " + df.format(restante) + " min — nem o Bach cabe.");
+                System.out.println("  Restam " + df.format(restante) + " min.");
             }
             System.out.println("Total da sessão: " + df.format(totalSessao) +
                     " min de " + df.format(minutos) + " min");
@@ -135,24 +134,29 @@ public class Main {
             // PT-001: (42 × 4) ÷ 60 = 2,8 min
             Item pt001 = collectionStore.search("PT-001");
             double durPt001 = pt001.getDuration();
-            assert Math.abs(durPt001 - 2.8) < 0.01 : "PT-001 deve ter 2,8 min";
+            check( Math.abs(durPt001 - 2.8) < 0.01 , "PT-001 deve ter 2,8 min");
             System.out.println("✓ PT-001: " + df.format(durPt001) + " min (esperado 2,8)");
 
             // PT-002: (96 × 4) ÷ 84 = 4,571...
             Item pt002 = collectionStore.search("PT-002");
             double durPt002 = pt002.getDuration();
-            assert Math.abs(durPt002 - 4.571) < 0.01 : "PT-002 deve ter ~4,571 min";
+            check(Math.abs(durPt002 - 4.571) < 0.01 , "PT-002 deve ter ~4,571 min");
             System.out.println("✓ PT-002: " + df.format(durPt002) + " min (esperado 4,6)");
 
             // SR-001: (36 + 29) × 25 = 1625,0 min
             Item sr001 = collectionStore.search("SR-001");
             double durSr001 = sr001.getDuration();
-            assert Math.abs(durSr001 - 1625.0) < 0.01 : "SR-001 deve ter 1625,0 min";
+            check(Math.abs(durSr001 - 1625.0) < 0.01 , "SR-001 deve ter 1625,0 min");
+
             System.out.println("✓ SR-001: " + df.format(durSr001) + " min (esperado 1625,0)");
 
             // Total: 2,8 + 4,571 + 3,368 + 118 + 1625 = 1753,7
             double total = collectionStore.getTotalDuration();
-            assert Math.abs(total - 1753.7) < 0.1 : "Total deve ser ~1753,7 min";
+            check(
+                    Math.abs(total - 1753.7) < 0.1,
+                    "Total deve ser ~1753,7 min"
+            );
+
             System.out.println("✓ Total: " + df.format(total) + " min (esperado 1753,7)");
 
             System.out.println("\n✓ Todos os testes passaram!");
@@ -160,6 +164,12 @@ public class Main {
             System.out.println("✗ Erro no auto-teste: " + e.getMessage());
         } catch (AssertionError e) {
             System.out.println("✗ Asserção falhou: " + e.getMessage());
+        }
+    }
+
+    private static void check(boolean condition, String message) {
+        if (!condition) {
+            throw new AssertionError(message);
         }
     }
 }

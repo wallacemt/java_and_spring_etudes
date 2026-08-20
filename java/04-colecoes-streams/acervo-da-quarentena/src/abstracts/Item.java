@@ -1,6 +1,7 @@
 package abstracts;
 
 import utils.Conservation;
+import utils.ItemType;
 
 import java.time.Year;
 import java.util.Calendar;
@@ -32,9 +33,10 @@ public abstract class Item {
     }
 
     private void validateYear(int year) {
-        int actualYear = Year.now().getValue();
-        if (year > actualYear) {
-            throw new IllegalArgumentException("Year cannot be greater than the current year: " + actualYear);
+        if (year < 1500 || year > 2013) {
+            throw new IllegalArgumentException(
+                    "Year must be between 1500 and 2013"
+            );
         }
     }
 

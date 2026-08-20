@@ -2,19 +2,20 @@ package entities;
 
 import abstracts.Item;
 import utils.Conservation;
+import utils.ItemType;
 
 public class Movie extends Item {
     private String director;
-    private double duractiton;
+    private double duration;
 
     public Movie(String code, String title, int ano, Conservation conservation,
-                 String director, double duractiton) {
+                 String director, double duration) {
         super(code, title, ano, conservation);
         validateDirector(director);
-        validateDuration(duractiton);
+        validateDuration(duration);
 
         this.director = director;
-        this.duractiton = duractiton;
+        this.duration = duration;
     }
 
     private void validateDirector(String diretor) {
@@ -31,26 +32,23 @@ public class Movie extends Item {
 
     @Override
     public double getDuration() {
-        return this.duractiton;
+        return this.duration;
     }
 
     @Override
     public String describe() {
         return String.format("[%s] %s (%d) · dir. %s · %.1f min · %s",
                 this.getCode(), this.getTitle(), this.getYear(), this.director,
-                this.duractiton, this.getConservation());
+                this.duration, this.getConservation());
     }
 
     @Override
     public String getType() {
-        return "Movie";
+        return ItemType.MOVIE.name();
     }
 
     public String getDirector() {
         return director;
     }
 
-    public double getDuraction() {
-        return duractiton;
-    }
 }

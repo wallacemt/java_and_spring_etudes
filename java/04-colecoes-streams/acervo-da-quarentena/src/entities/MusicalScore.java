@@ -2,6 +2,7 @@ package entities;
 
 import abstracts.Item;
 import utils.Conservation;
+import utils.ItemType;
 
 public class MusicalScore extends Item {
 
@@ -62,7 +63,7 @@ public class MusicalScore extends Item {
 
     @Override
     public String getType() {
-        return "MusicalScore";
+        return ItemType.MUSICAL_SCORE.name();
     }
 
     public String getComposition() {

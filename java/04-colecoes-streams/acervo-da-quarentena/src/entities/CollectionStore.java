@@ -4,6 +4,7 @@ import abstracts.Item;
 import exceptions.DuplicatedItemException;
 import exceptions.NotFoundItemException;
 import utils.Conservation;
+import utils.ItemType;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class CollectionStore {
                 .sum();
     }
 
-    public List<Item> nigthSession(double availibleMinutes)
+    public List<Item> nightSession(double availibleMinutes)
             throws IllegalArgumentException {
         if (availibleMinutes < 0) {
             throw new IllegalArgumentException("minutes has  cannot negative!");

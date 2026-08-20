@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Desafio 02 — A Rede de Segurança</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+
+  :root {
+    --ink:      #1c1c1c;
+    --muted:    #5b6168;
+    --line:     #d8d5cd;
+    --accent:   #6b4f2a;
+    --accent-2: #2f5d50;
+    --code-bg:  #f5f3ee;
+    --warn-bg:  #fbf3e4;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.55;
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.25;
+    page-break-after: avoid;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin: 0 0 2mm 0;
+    letter-spacing: -0.4pt;
+  }
+  h2 {
+    font-size: 13.5pt;
+    margin: 9mm 0 3mm 0;
+    padding-bottom: 1.5mm;
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 11.5pt;
+    margin: 6mm 0 2mm 0;
+    color: var(--accent-2);
+  }
+  h4 { font-size: 10.5pt; margin: 4mm 0 1.5mm 0; }
+
+  p { margin: 0 0 3mm 0; text-align: justify; }
+  ul, ol { margin: 0 0 3mm 0; padding-left: 6mm; }
+  li { margin-bottom: 1.4mm; }
+  strong { color: #000; }
+
+  .capa {
+    border-bottom: 3px double var(--accent);
+    padding-bottom: 5mm;
+    margin-bottom: 6mm;
+  }
+  .eyebrow {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.5pt;
+    letter-spacing: 1.6pt;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2mm;
+  }
+  .subtitulo {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11pt;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 4mm;
+  }
+
+  .meta {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+  }
+  .meta div { display: table-row; }
+  .meta span {
+    display: table-cell;
+    padding: 1.2mm 3mm 1.2mm 0;
+    vertical-align: top;
+  }
+  .meta span:first-child {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6pt;
+    font-size: 8pt;
+    width: 34mm;
+    padding-top: 1.6mm;
+  }
+
+  .meta span.badge {
+    display: inline-block;
+    background: #2f5d50;
+    color: #fff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8pt;
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    padding: 1mm 2.5mm;
+    border-radius: 2px;
+  }
+
+  blockquote {
+    margin: 4mm 0;
+    padding: 3mm 5mm;
+    border-left: 3px solid var(--accent);
+    background: var(--warn-bg);
+    font-style: italic;
+    color: #3a3a3a;
+  }
+  blockquote p { margin: 0; }
+
+  table.dados {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.8pt;
+    margin: 3mm 0 4mm 0;
+    page-break-inside: avoid;
+  }
+  table.dados th {
+    background: #efece4;
+    text-align: left;
+    padding: 1.8mm 2mm;
+    border-bottom: 1.5px solid var(--accent);
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+  }
+  table.dados td {
+    padding: 1.8mm 2mm;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.dados tr:nth-child(even) td { background: #faf9f6; }
+  td.num, th.num { text-align: right; }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-2);
+    padding: 3mm 4mm;
+    font-family: "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 8.6pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    page-break-inside: avoid;
+    margin: 2mm 0 4mm 0;
+  }
+  code {
+    font-family: "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 9pt;
+    background: var(--code-bg);
+    padding: 0.3mm 1mm;
+    border-radius: 2px;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+
+  .caixa {
+    border: 1px solid var(--line);
+    background: #fbfaf7;
+    padding: 3.5mm 4mm;
+    margin: 3mm 0 4mm 0;
+    page-break-inside: avoid;
+  }
+  .caixa h4 { margin-top: 0; }
+  .caixa.alerta { background: var(--warn-bg); border-color: #d9c39a; }
+  .caixa.proibido { background: #fbf0f0; border-color: #dcbcbc; }
+  .caixa.ok { background: #f1f6f2; border-color: #b9cfbe; }
+
+  ol.aceite { list-style: none; padding-left: 0; counter-reset: ac; }
+  ol.aceite li {
+    counter-increment: ac;
+    padding-left: 9mm;
+    position: relative;
+    margin-bottom: 2mm;
+  }
+  ol.aceite li::before {
+    content: "\2610";
+    position: absolute;
+    left: 0;
+    top: -0.3mm;
+    font-size: 11pt;
+    color: var(--accent);
+  }
+
+  .quebra { page-break-before: always; }
+  .rodape {
+    margin-top: 8mm;
+    padding-top: 3mm;
+    border-top: 1px solid var(--line);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    text-align: center;
+    font-style: italic;
+  }
+  .nota { font-size: 9pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <div class="eyebrow">Desafios &nbsp;·&nbsp; Java puro + JUnit &nbsp;·&nbsp; Nº 02</div>
+  <h1>A Rede de Segurança</h1>
+  <div class="subtitulo">Onde você para de perguntar ao console se o código está certo</div>
+  <div class="meta">
+    <div><span>Nível</span><span><span class="badge">Médio</span> &nbsp; menos modelagem que o 01, mais rigor</span></div>
+    <div><span>Stack</span><span>Java 21 + JUnit 6 (um único <code>.jar</code>, sem build tool)</span></div>
+    <div><span>Solução em</span><span><code>java/04-colecoes-streams/acervo-da-quarentena/test/</code></span></div>
+    <div><span>Tempo estimado</span><span>3 a 5 horas, em duas sentadas (Ato I e Ato II)</span></div>
+    <div><span>Pré-requisito</span><span>desafio 01 aprovado — este desafio trabalha em cima daquele código</span></div>
+    <div><span>Conceitos novos</span><span><code>@Test</code>, <code>assertEquals</code> com delta,
+      <code>assertThrows</code>, <code>@BeforeEach</code>, <code>@DisplayName</code>,
+      <code>@ParameterizedTest</code>, teste de mutação, refatoração sob rede</span></div>
+  </div>
+</div>
+
+<h2>1. O contexto</h2>
+
+<p>
+O acervo está catalogado. As patrulhas continuam trazendo caixa de coisa velha, e agora
+alguém da comunidade — provavelmente a Maria, que não confia em nada que ela mesma não
+tenha conferido — faz a pergunta que você vinha adiando: <em>"como você sabe que os números
+estão certos?"</em>
+</p>
+
+<p>
+Na primeira entrega do desafio 01, a sua resposta teria sido "o programa imprimiu". E o
+programa imprimiu <code>1,4 min</code> ao lado de <code>esperado 2,8</code> e concluiu, na
+linha seguinte, que estava tudo bem. Foram quatro rodadas até aquela última linha ficar verde.
+Você não errou por não saber Java — o polimorfismo estava certo desde a primeira entrega.
+Você errou porque não tinha como saber que estava errado.
+</p>
+
+<blockquote>
+  <p>
+    "Você conferiu?" — "Rodou sem erro."<br>
+    "Não foi isso que eu perguntei."
+  </p>
+</blockquote>
+
+<p>
+O seu <code>check()</code> foi um bom começo — e não estou sendo gentil, foi mesmo: você
+identificou que <code>assert</code> vinha desligado e construiu a alternativa certa sozinho.
+Agora vamos trocar aquele começo por uma ferramenta que o mercado inteiro usa, e que responde
+coisas que o seu <code>check()</code> não responde: quantos testes passaram, quais falharam,
+por quê, e o que exatamente era esperado contra o que veio.
+</p>
+
+<h2>2. O que você vai construir</h2>
+
+<p>
+Este desafio tem <strong>dois atos</strong>, e a ordem é obrigatória. Fazer o Ato II antes do
+Ato I é justamente o erro que este desafio existe para curar.
+</p>
+
+<table class="dados">
+  <tr><th>Ato</th><th>O que é</th><th>Por que nesta ordem</th></tr>
+  <tr>
+    <td><strong>I — Montar a rede</strong></td>
+    <td>Escrever a suíte de testes JUnit do acervo, sem tocar em nenhuma linha de <code>src/</code>.</td>
+    <td>Rede primeiro. Você precisa saber que o código funciona <em>hoje</em> para provar que continua funcionando amanhã.</td>
+  </tr>
+  <tr>
+    <td><strong>II — Usar a rede</strong></td>
+    <td>Fazer a faxina que ficou pendente do desafio 01, com a suíte verde a cada passo.</td>
+    <td>É aqui que a rede paga o investimento. Você vai mexer em código que funciona — sem medo, porque tem quem avise.</td>
+  </tr>
+</table>
+
+<h3>2.1 Onde os arquivos moram</h3>
+
+<pre><code>java/04-colecoes-streams/acervo-da-quarentena/
+├── src/                       # seu código do desafio 01 (inalterado no Ato I)
+│   ├── Main.java
+│   ├── abstracts/Item.java
+│   └── ...
+└── test/                      # NOVO — a sua rede
+    ├── ItemTest.java
+    ├── MusicalScoreTest.java
+    ├── MovieTest.java
+    ├── SerieTest.java
+    └── CollectionStoreTest.java</code></pre>
+
+<p class="nota">
+No mundo Maven isso vira <code>src/main/java</code> e <code>src/test/java</code>, e é a
+estrutura que você vai encontrar em qualquer projeto Spring. Não vamos migrar agora — uma
+ferramenta nova por desafio. Mas repare que a <em>ideia</em> é a mesma: teste vive separado do
+código, e não vai para produção junto. Ao terminar, atualize
+<code>docs/ESTRUTURA.md</code> registrando a pasta <code>test/</code>: documentação que não
+acompanha a mudança vira mentira em três semanas.
+</p>
+
+<h2>3. Setup — JUnit sem build tool</h2>
+
+<p>
+Um jar, um classpath, zero XML. Baixe na raiz da pasta do desafio:
+</p>
+
+<pre><code>cd java/04-colecoes-streams/acervo-da-quarentena
+
+curl -L -o junit-console.jar \
+  https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/6.1.3/junit-platform-console-standalone-6.1.3.jar</code></pre>
+
+<p>Compilar código e testes juntos, e executar a suíte:</p>
+
+<pre><code>javac -encoding UTF-8 -cp junit-console.jar -d out $(find src test -name '*.java')
+
+java -jar junit-console.jar execute --class-path out --scan-class-path</code></pre>
+
+<div class="caixa alerta">
+  <h4>Sobre a versão — e sobre o que você vai ler na internet</h4>
+  <p>
+    A geração atual é o <strong>JUnit 6</strong> (baseline Java 17; você está no 21, tudo certo).
+    Mas <strong>99% dos tutoriais, cursos e respostas de fórum dizem "JUnit 5"</strong> — e o
+    código deles funciona igual no seu projeto, porque o pacote continua sendo
+    <code>org.junit.jupiter.api</code> e as anotações são as mesmas. O que mudou entre o 5 e o 6
+    é baseline de JDK e entranhas da plataforma, não a API que você vai escrever.
+  </p>
+  <p style="margin-bottom:0">
+    Confira no Maven Central se saiu versão mais nova da linha 6.x e ajuste a URL. Saber
+    descobrir a versão atual de uma dependência é parte do trabalho — e "o tutorial de 2021
+    mandou usar 5.7" é a origem de metade dos projetos desatualizados que você vai herdar.
+  </p>
+</div>
+
+<p>
+Adicione <code>junit-console.jar</code> e <code>out/</code> ao <code>.gitignore</code>. Jar
+baixado não se versiona.
+</p>
+
+<h2 class="quebra">4. Ato I — Montar a rede</h2>
+
+<p>
+<strong>Regra de ouro do Ato I: você não altera nenhuma linha dentro de <code>src/</code>.</strong>
+Nem para consertar os typos que você sabe que estão lá. Se um teste falhar porque o código está
+errado, <em>anote e siga</em> — o conserto é do Ato II. Se você não resistir e corrigir agora,
+perdeu a chance de sentir o que este desafio ensina.
+</p>
+
+<h3>4.1 O que a suíte precisa cobrir</h3>
+
+<p>
+Isto é o mínimo. Nomes de método e organização em arquivos são decisão sua — e você defende no
+review.
+</p>
+
+<table class="dados">
+  <tr><th>#</th><th>Grupo</th><th>O que verificar</th><th>Ferramenta</th></tr>
+  <tr><td>1</td><td>Duração — Partitura</td><td>42 compassos a 60 bpm dão 2,8 min. Um caso não inteiro também (96 a 84 bpm).</td><td><code>assertEquals</code> com delta</td></tr>
+  <tr><td>2</td><td>Duração — Filme</td><td>a duração informada é a duração devolvida</td><td><code>assertEquals</code></td></tr>
+  <tr><td>3</td><td>Duração — Série</td><td>temporadas [36, 29] a 25 min/ep dão 1625,0 min</td><td><code>assertEquals</code></td></tr>
+  <tr><td>4</td><td>Duração total</td><td>o acervo de exemplo soma 1753,7 min, <strong>sem arredondar antes de somar</strong></td><td><code>assertEquals</code> com delta</td></tr>
+  <tr><td>5</td><td>Construtor rejeita lixo</td><td>bpm 0; dificuldade 9; ano 2049; ano 1200; título vazio; título só com espaços; duração negativa; array de episódios vazio</td><td><code>assertThrows</code></td></tr>
+  <tr><td>6</td><td>Catalogar duplicado</td><td>mesmo código duas vezes lança a sua exceção — e o acervo continua com o item original</td><td><code>assertThrows</code></td></tr>
+  <tr><td>7</td><td>Buscar inexistente</td><td>o comportamento que você escolheu no desafio 01, agora fixado por teste</td><td><code>assertThrows</code></td></tr>
+  <tr><td>8</td><td><strong>Cópia defensiva</strong></td><td><code>acervo.listAll().clear()</code> não esvazia o acervo. E o que mais essa chamada faz? Descubra e teste.</td><td><code>assertThrows</code> + <code>assertEquals</code></td></tr>
+  <tr><td>9</td><td><strong>Contrato equals/hashCode</strong></td><td>um Filme e uma Partitura com o mesmo código são iguais; códigos diferentes não são; objetos iguais têm o mesmo <code>hashCode</code></td><td><code>assertEquals</code>, <code>assertNotEquals</code></td></tr>
+  <tr><td>10</td><td>Sessão da noite</td><td>item <code>ILEGIVEL</code> nunca entra; a ordem gulosa é a do enunciado 01; 120 min devolvem só o filme; 130 min devolvem três itens</td><td><code>assertEquals</code> em lista</td></tr>
+  <tr><td>11</td><td>Sessão — bordas</td><td>minutos negativos lançam <code>IllegalArgumentException</code>; zero minutos devolve lista vazia (e não estoura)</td><td><code>assertThrows</code>, <code>assertTrue</code></td></tr>
+  <tr><td>12</td><td>Acervo vazio</td><td>duração total 0; <code>listAll()</code> vazia; agrupamento vazio; sessão vazia. Nada de <code>NullPointerException</code>.</td><td>vários</td></tr>
+</table>
+
+<div class="caixa">
+  <h4>Sobre o item 8 — tem coisa escondida ali</h4>
+  <p style="margin-bottom:0">
+    Você escreveu <code>Collections.unmodifiableList(new ArrayList&lt;&gt;(...))</code>. São
+    <em>duas</em> proteções empilhadas, e elas falham de maneiras diferentes. Escreva o teste,
+    veja o que acontece de verdade, e venha me dizer: uma das duas é redundante? O que
+    <code>List.copyOf</code> faria diferente? Não pesquise a resposta antes de rodar — rode
+    primeiro, tenha uma opinião, depois confira.
+  </p>
+</div>
+
+<h3>4.2 Como um teste JUnit se parece</h3>
+
+<p>
+Um exemplo curto, de um problema que <strong>não é o seu</strong>, só para você ver o formato.
+A tradução para o acervo é sua:
+</p>
+
+<pre><code>import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class TermometroTest {
+
+    @Test
+    void converteZeroCelsiusParaTrintaEDoisFahrenheit() {
+        Termometro t = new Termometro();              // Arrange
+        double f = t.paraFahrenheit(0.0);             // Act
+        assertEquals(32.0, f, 0.001);                 // Assert
+    }
+
+    @Test
+    void rejeitaTemperaturaAbaixoDoZeroAbsoluto() {
+        Termometro t = new Termometro();
+        assertThrows(IllegalArgumentException.class,
+                     () -> t.paraFahrenheit(-300.0));
+    }
+}</code></pre>
+
+<p>
+Três coisas para reparar: o nome do método <em>descreve o comportamento</em> e é lido como
+frase; o corpo tem três blocos (prepare, execute, verifique — chamam isso de
+<strong>AAA</strong>); e <code>assertEquals</code> de <code>double</code> leva um terceiro
+argumento. Por quê? Rode <code>System.out.println(0.1 + 0.2);</code> num
+<code>main</code> qualquer e você terá a resposta na tela.
+</p>
+
+<h2>5. Regras que separam o júnior do sênior</h2>
+
+<div class="caixa">
+  <h4>R1 — Um teste que não pode falhar não é um teste</h4>
+  <p>
+    Você já viveu isso: no desafio 01 a sua suíte imprimia "todos os testes passaram" e não
+    tinha como reprovar nada. Depois de escrever cada bloco de testes,
+    <strong>quebre o código de propósito</strong> — troque um <code>+</code> por um
+    <code>-</code>, um <code>&lt;=</code> por um <code>&lt;</code>, um <code>60</code> por
+    <code>61</code> — e confirme que algum teste fica vermelho. Depois desfaça.
+    Isso chama-se <strong>teste de mutação</strong>, tem ferramenta de mercado (PIT) e foi
+    exatamente o que eu fiz no seu código antes de aprovar o desafio 01.
+    Entregue um <code>test/MUTACOES.md</code> curto: que mutação você fez, qual teste pegou.
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R2 — Um teste, uma razão para falhar</h4>
+  <p>
+    Se o seu teste tem seis <code>assertEquals</code> sobre seis assuntos diferentes, quando ele
+    falhar você vai saber que <em>algo</em> quebrou, não <em>o quê</em>. Testes pequenos custam
+    mais linhas e economizam mais tempo. Qual é a exceção legítima a essa regra? Pense em quando
+    várias verificações descrevem <em>um único</em> comportamento.
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R3 — O nome do teste é a documentação</h4>
+  <p>
+    <code>testeDuracao1()</code> não conta nada. <code>itemIlegivelNaoEntraNaSessaoDaNoite()</code>
+    conta. Quando alguém abrir a sua suíte daqui a seis meses — e esse alguém é você —
+    a lista de nomes precisa ser lida como a especificação do acervo. Se o nome ficou grande
+    demais para caber, o teste provavelmente está fazendo duas coisas (ver R2). Existe uma
+    anotação do JUnit para nomes em português com espaços e acento: descubra qual, e decida se
+    vale a pena usar ou se o nome do método já basta.
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R4 — Teste comportamento, não implementação</h4>
+  <p>
+    Testar que a duração de uma partitura é 2,8 min é comportamento: continua valendo se você
+    reescrever o cálculo. Testar que <code>getCompass()</code> devolve o que o construtor
+    recebeu é implementação: o teste quebra quando você refatora, sem que nada tenha realmente
+    quebrado. Suíte cheia de teste de getter é suíte que o time aprende a ignorar.
+    <strong>Não teste getters triviais.</strong> E anote: quais dos 12 itens da tabela são
+    comportamento, e algum é implementação disfarçada?
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R5 — Teste não conversa com teste</h4>
+  <p>
+    Cada teste monta o que precisa e não depende de nenhum outro ter rodado antes. Se a sua suíte
+    passa em uma ordem e falha em outra, você não tem uma suíte — tem um roteiro. O JUnit tem uma
+    anotação que roda um preparo antes de <em>cada</em> teste: use, e entenda por que não é
+    "antes de todos".
+  </p>
+</div>
+
+<h2 class="quebra">6. Ato II — Usar a rede</h2>
+
+<p>
+Agora sim. Com a suíte verde, você vai mexer no código do desafio 01 — e a regra muda:
+</p>
+
+<div class="caixa ok">
+  <h4>Protocolo do Ato II</h4>
+  <p style="margin-bottom:0">
+    Uma mudança de cada vez. Rode a suíte. Verde? Próxima. Vermelho? Você acabou de descobrir
+    algo — ou quebrou o código, ou o teste estava errado. <strong>Descubra qual antes de
+    continuar</strong>, e nunca "conserte" apagando o teste.
+  </p>
+</div>
+
+<table class="dados">
+  <tr><th>#</th><th>Faxina pendente do desafio 01</th><th>O que você vai sentir</th></tr>
+  <tr><td>1</td><td>Typos na API pública: <code>validadeTitle</code>, <code>outher</code>, <code>gratter</code>, <code>Compaas</code>, <code>DEMAGED</code>, <code>ILEGIBLE</code></td><td>renomear coisa pública dá medo sem teste. Com teste, é entediante — e entediante é o objetivo.</td></tr>
+  <tr><td>2</td><td>Idioma consistente no projeto inteiro (<code>obterTotalItens</code> convive com <code>getTotalDuration</code>) — critério de aceite 13 do desafio 01, o único que ficou aberto</td><td>a suíte também está em algum idioma. Escolha antes de começar.</td></tr>
+  <tr><td>3</td><td>O <code>enum ItemType</code> existe mas só é usado como <code>ItemType.MOVIE.name()</code>. Faça-o valer como tipo.</td><td>aqui a suíte vai te cobrar de verdade. É a refatoração mais interessante da lista.</td></tr>
+  <tr><td>4</td><td>Cabeçalho: <code>=== Relatório principal DA QUARENTENA ===</code> — consulte a seção 4.2 do desafio 01</td><td>trinta segundos. Está aqui porque sobreviveu a quatro rodadas.</td></tr>
+  <tr><td>5</td><td><code>dir. dir. desconhecido</code> na ficha do filme</td><td>o dado já traz o prefixo que o <code>describe()</code> também escreve. Onde é o lugar certo do prefixo?</td></tr>
+  <tr><td>6</td><td>Os 4 avisos de <code>javac -Xlint:all</code></td><td>trate ou justifique cada um, por escrito. Um deles (<code>this-escape</code>) é sutil e vale a pesquisa.</td></tr>
+  <tr><td>7</td><td><code>describe()</code> imprime <code>118.0</code> e a sessão imprime <code>118,0</code>, na mesma tela</td><td>decida de quem é a responsabilidade de formatar. Não existe resposta única — existe justificativa.</td></tr>
+  <tr><td>8</td><td>Justificar <em>checked</em> vs. <em>unchecked</em> das suas exceções, no <code>PLAN.md</code>, e deixar assinatura e implementação coerentes</td><td>pendência arrastada desde a primeira revisão. Agora você tem testes que <em>documentam</em> o comportamento — use-os no argumento.</td></tr>
+</table>
+
+<h2>7. Critérios de aceite</h2>
+
+<ol class="aceite">
+  <li>A suíte roda com o comando da seção 3 e o console do JUnit reporta <strong>0 failures</strong>.</li>
+  <li>Os 12 grupos da tabela 4.1 estão cobertos.</li>
+  <li>Nenhum teste depende de outro teste ter rodado antes (R5).</li>
+  <li>Nenhum <code>System.out.println</code> dentro dos testes. Quem reporta é o JUnit.</li>
+  <li>Nenhum teste de getter trivial (R4).</li>
+  <li>Existe <code>test/MUTACOES.md</code> com pelo menos <strong>3</strong> mutações feitas e qual teste pegou cada uma (R1).</li>
+  <li>Ao final do Ato II, os 8 itens da faxina estão feitos <strong>e a suíte continua verde</strong>.</li>
+  <li><code>javac -Xlint:all</code> não emite aviso — ou cada aviso restante está justificado por escrito.</li>
+  <li>O programa principal continua funcionando: <code>java Main</code> ainda imprime os números da seção 4.2 do desafio 01.</li>
+  <li><code>docs/ESTRUTURA.md</code> foi atualizado com a pasta <code>test/</code>.</li>
+  <li><code>.gitignore</code> cobre <code>junit-console.jar</code> e <code>out/</code>.</li>
+  <li>Idioma consistente — <strong>no código e nos testes</strong>.</li>
+</ol>
+
+<h3>Bônus — depois que o principal estiver de pé</h3>
+<ul>
+  <li>Troque os testes repetitivos de duração por um <code>@ParameterizedTest</code> com
+      <code>@CsvSource</code>. Compare com a versão anterior: ficou mais legível ou menos?
+      Guarde as duas para o review.</li>
+  <li>Use <code>assertAll</code> em um lugar onde ele faz sentido e explique por que ali,
+      e não nos outros.</li>
+  <li><code>@Nested</code> para agrupar os testes de sessão da noite por cenário.</li>
+  <li>Escreva um teste que <em>documenta um bug conhecido e ainda não corrigido</em>. O JUnit tem
+      anotação para isso. Descubra qual — e por que ela é melhor do que comentar o teste.</li>
+</ul>
+
+<div class="caixa proibido">
+  <h4>O que não vale</h4>
+  <ul style="margin-bottom:0">
+    <li>Fazer o Ato II antes do Ato I. É o coração do desafio.</li>
+    <li>Alterar <code>src/</code> durante o Ato I — nem um typo.</li>
+    <li>Apagar, comentar ou afrouxar um teste para ele passar. Se ele está vermelho, ele está
+        te dizendo alguma coisa. <em>Você já fez a escolha certa nessa situação uma vez.</em></li>
+    <li>Pedir a suíte pronta ao Claude. Erro de compilação, "como funciona <code>assertThrows</code>",
+        "o que é um lambda": pode e deve perguntar.</li>
+    <li>Copiar teste de fórum que você não sabe explicar. No review, eu pergunto.</li>
+  </ul>
+</div>
+
+<h2>8. Por que este desafio existe</h2>
+
+<p>
+No desafio 01 você aprendeu a construir. Aqui você aprende a <strong>mudar sem quebrar</strong> —
+e a segunda habilidade vale mais que a primeira, porque código de verdade passa 10% da vida
+sendo escrito e 90% sendo alterado por gente que não estava lá quando ele nasceu.
+</p>
+
+<p>
+Repare no que aconteceu com você nas rodadas 1.5 e 1.6: você mexeu no código para melhorar e
+introduziu uma regressão que zerou uma seção inteira do relatório — duas vezes seguidas, sem
+perceber. Não foi falta de cuidado. Foi falta de rede. Ninguém consegue segurar um programa
+inteiro na cabeça a cada mudança; a diferença entre quem quebra produção e quem não quebra
+raramente é atenção — é ter, ou não ter, quem avise.
+</p>
+
+<p>
+No mercado isso é filtro de entrada. Take-home sem teste é reprovado antes de alguém olhar a
+sua arquitetura. Em entrevista de vaga sênior, "como você testaria isso?" vem logo depois de
+"como você implementaria isso?", e a segunda resposta pesa mais que a primeira. E quando você
+chegar ao Spring, vai reencontrar exatamente estas anotações — <code>@Test</code>,
+<code>@BeforeEach</code>, <code>assertThrows</code> — dentro de <code>@SpringBootTest</code> e
+<code>@DataJpaTest</code>. A API que você aprende aqui é a mesma que você vai usar lá.
+</p>
+
+<blockquote>
+  <p>
+    Teste não existe para provar que o seu código funciona. Existe para você poder mudá-lo
+    amanhã sem medo. Medo é o que faz programador bom escrever código ruim.
+  </p>
+</blockquote>
+
+<div class="rodape">
+  Mestre Yoda · Desafio 02 · <em>A rede não impede a queda. Ela deixa você tentar o salto.</em>
+</div>
+
+</body>
+</html>

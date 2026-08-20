@@ -2,6 +2,7 @@ package entities;
 
 import abstracts.Item;
 import utils.Conservation;
+import utils.ItemType;
 
 public class Serie extends Item {
     private int[] episodesPerSeason;
@@ -56,7 +57,7 @@ public class Serie extends Item {
 
     @Override
     public String getType() {
-        return "Serie";
+        return ItemType.SERIE.name();
     }
 
     public int[] getEpisodesPerSeason() {

@@ -15,8 +15,12 @@ java/
 ├── 02-poo/                orientação a objetos
 └── 03-projetos/           mini-projetos que combinam os fundamentos
 spring/                    desafios com Spring / Spring Boot (em breve)
-docs/                      documentação de convenções do repositório
+desafios/                  enunciados dos desafios em PDF (sem solução)
+docs/                      convenções do repositório e storyboards de aprendizado
 ```
+
+> Este repositório está em **Modo Yoda** (ver [`CLAUDE.md`](CLAUDE.md)): a IA orienta o
+> raciocínio, não escreve a implementação.
 
 ## Progresso
 

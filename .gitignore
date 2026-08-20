@@ -9,7 +9,7 @@ build/
 # Maven / Gradle wrapper cache
 .mvn/
 .gradle/
-
+storyboards
 # IDE
 .idea/
 *.iml

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Desafio 01 — Acervo da Quarentena</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+
+  :root {
+    --ink:      #1c1c1c;
+    --muted:    #5b6168;
+    --line:     #d8d5cd;
+    --accent:   #6b4f2a;
+    --accent-2: #2f5d50;
+    --code-bg:  #f5f3ee;
+    --warn-bg:  #fbf3e4;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.55;
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.25;
+    page-break-after: avoid;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin: 0 0 2mm 0;
+    letter-spacing: -0.4pt;
+  }
+  h2 {
+    font-size: 13.5pt;
+    margin: 9mm 0 3mm 0;
+    padding-bottom: 1.5mm;
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 11.5pt;
+    margin: 6mm 0 2mm 0;
+    color: var(--accent-2);
+  }
+  h4 { font-size: 10.5pt; margin: 4mm 0 1.5mm 0; }
+
+  p { margin: 0 0 3mm 0; text-align: justify; }
+  ul, ol { margin: 0 0 3mm 0; padding-left: 6mm; }
+  li { margin-bottom: 1.4mm; }
+  strong { color: #000; }
+
+  .capa {
+    border-bottom: 3px double var(--accent);
+    padding-bottom: 5mm;
+    margin-bottom: 6mm;
+  }
+  .eyebrow {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.5pt;
+    letter-spacing: 1.6pt;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2mm;
+  }
+  .subtitulo {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11pt;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 4mm;
+  }
+
+  .meta {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+  }
+  .meta div { display: table-row; }
+  .meta span {
+    display: table-cell;
+    padding: 1.2mm 3mm 1.2mm 0;
+    vertical-align: top;
+  }
+  .meta span:first-child {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6pt;
+    font-size: 8pt;
+    width: 34mm;
+    padding-top: 1.6mm;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #7a2f2f;
+    color: #fff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8pt;
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    padding: 1mm 2.5mm;
+    border-radius: 2px;
+  }
+
+  blockquote {
+    margin: 4mm 0;
+    padding: 3mm 5mm;
+    border-left: 3px solid var(--accent);
+    background: var(--warn-bg);
+    font-style: italic;
+    color: #3a3a3a;
+  }
+  blockquote p { margin: 0; }
+
+  table.dados {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.8pt;
+    margin: 3mm 0 4mm 0;
+    page-break-inside: avoid;
+  }
+  table.dados th {
+    background: #efece4;
+    text-align: left;
+    padding: 1.8mm 2mm;
+    border-bottom: 1.5px solid var(--accent);
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+  }
+  table.dados td {
+    padding: 1.8mm 2mm;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.dados tr:nth-child(even) td { background: #faf9f6; }
+  td.num, th.num { text-align: right; }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-2);
+    padding: 3mm 4mm;
+    font-family: "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 8.6pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    page-break-inside: avoid;
+    margin: 2mm 0 4mm 0;
+  }
+  code {
+    font-family: "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 9pt;
+    background: var(--code-bg);
+    padding: 0.3mm 1mm;
+    border-radius: 2px;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+
+  .caixa {
+    border: 1px solid var(--line);
+    background: #fbfaf7;
+    padding: 3.5mm 4mm;
+    margin: 3mm 0 4mm 0;
+    page-break-inside: avoid;
+  }
+  .caixa h4 { margin-top: 0; }
+  .caixa.alerta { background: var(--warn-bg); border-color: #d9c39a; }
+  .caixa.proibido { background: #fbf0f0; border-color: #dcbcbc; }
+
+  ol.aceite { list-style: none; padding-left: 0; counter-reset: ac; }
+  ol.aceite li {
+    counter-increment: ac;
+    padding-left: 9mm;
+    position: relative;
+    margin-bottom: 2mm;
+  }
+  ol.aceite li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    top: -0.3mm;
+    font-size: 11pt;
+    color: var(--accent);
+  }
+
+  .quebra { page-break-before: always; }
+  .rodape {
+    margin-top: 8mm;
+    padding-top: 3mm;
+    border-top: 1px solid var(--line);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    text-align: center;
+    font-style: italic;
+  }
+  .nota { font-size: 9pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <div class="eyebrow">Desafios &nbsp;·&nbsp; Java puro &nbsp;·&nbsp; Nº 01</div>
+  <h1>O Acervo da Quarentena</h1>
+  <div class="subtitulo">Um catálogo do que sobrou de bonito no fim do mundo</div>
+  <div class="meta">
+    <div><span>Nível</span><span><span class="badge">Difícil</span> &nbsp; acima do que você já praticou — é para esticar</span></div>
+    <div><span>Stack</span><span>Java puro (JDK 17+), sem bibliotecas externas, sem build tool</span></div>
+    <div><span>Solução em</span><span><code>java/04-colecoes-streams/acervo-da-quarentena/src/</code></span></div>
+    <div><span>Tempo estimado</span><span>3 a 6 horas, distribuídas — não tente numa sentada só</span></div>
+    <div><span>Pré-requisito</span><span>o que você já fez: classes, encapsulamento, laços, <code>switch</code></span></div>
+    <div><span>Conceitos novos</span><span>interfaces e classes abstratas, polimorfismo, <code>enum</code>,
+      coleções (<code>List</code>, <code>Map</code>, <code>Set</code>), <code>Comparator</code>,
+      <code>equals</code>/<code>hashCode</code>, exceções customizadas</span></div>
+  </div>
+</div>
+
+<h2>1. O contexto</h2>
+
+<p>
+Jackson, Wyoming. Vinte anos depois do surto. A cidade tem muros, tem gente, tem eletricidade
+algumas horas por dia — e tem uma sala nos fundos da escola onde se guarda tudo que as patrulhas
+resgatam das cidades mortas: partituras encharcadas, DVDs riscados, fitas de séries que ninguém
+mais vai gravar. Alguém precisa catalogar isso. Esse alguém é você.
+</p>
+
+<blockquote>
+  <p>
+    "Você toca aquilo direito?" — perguntou a Maria, apontando pro violino no canto.<br>
+    "Se eu tivesse a partitura inteira, tocava. Mas metade dos compassos virou mofo."
+  </p>
+</blockquote>
+
+<p>
+O acervo é heterogêneo por natureza: uma <strong>partitura</strong> não é um <strong>filme</strong>,
+que não é uma <strong>série</strong>. Mesmo assim, a comunidade quer perguntar a mesma coisa para
+todos eles: <em>quanto tempo isso ocupa?</em> Quando as luzes acendem por duas horas à noite,
+o que cabe nesse tempo — dois episódios, um filme, ou meia hora estudando escalas no violino?
+</p>
+
+<p>
+É aí que mora o desafio: você vai construir um catálogo que trata coisas <strong>diferentes</strong>
+de forma <strong>uniforme</strong>. Esse é, literalmente, o problema que o polimorfismo existe
+para resolver. Até hoje você escreveu classes que vivem sozinhas (<code>Pessoa</code>,
+<code>Calculadora</code>). Agora você vai escrever uma <em>família</em> de classes.
+</p>
+
+<h2>2. O que você vai construir</h2>
+
+<p>
+Um programa de console, em Java puro, que modela o acervo e responde a quatro perguntas da
+comunidade. Nada de menu interativo obrigatório: a <code>Main</code> monta um acervo de exemplo,
+executa as operações e imprime os relatórios. (Menu com <code>Scanner</code> é bônus, no final.)
+</p>
+
+<h3>2.1 Os itens do acervo</h3>
+
+<p>Todo item catalogado, seja ele qual for, tem:</p>
+
+<table class="dados">
+  <tr><th>Atributo</th><th>Tipo</th><th>Regra</th></tr>
+  <tr><td><code>codigo</code></td><td>texto</td><td>identificador único no acervo (ex.: <code>PT-001</code>, <code>FL-001</code>, <code>SR-001</code>). Nunca nulo, nunca vazio.</td></tr>
+  <tr><td><code>titulo</code></td><td>texto</td><td>nunca nulo, nunca vazio (nem só espaços).</td></tr>
+  <tr><td><code>ano</code></td><td>inteiro</td><td>entre 1500 e 2013 — depois disso ninguém mais publicou nada.</td></tr>
+  <tr><td><code>conservacao</code></td><td>enum</td><td>um entre: <code>INTACTO</code>, <code>DESGASTADO</code>, <code>DANIFICADO</code>, <code>ILEGIVEL</code>.</td></tr>
+</table>
+
+<p>E cada tipo acrescenta o seu:</p>
+
+<table class="dados">
+  <tr><th>Tipo</th><th>Atributos próprios</th><th>Como se calcula a duração, em minutos</th></tr>
+  <tr>
+    <td><strong>Partitura</strong></td>
+    <td>compositor, dificuldade (1 a 5), número de compassos, andamento em BPM</td>
+    <td>assuma 4 tempos por compasso:<br><code>(compassos × 4) ÷ bpm</code></td>
+  </tr>
+  <tr>
+    <td><strong>Filme</strong></td>
+    <td>diretor, duração em minutos</td>
+    <td>a própria duração</td>
+  </tr>
+  <tr>
+    <td><strong>Série</strong></td>
+    <td>número de episódios por temporada, duração média do episódio</td>
+    <td><code>(soma dos episódios de todas as temporadas) × duração média</code></td>
+  </tr>
+</table>
+
+<p>
+Repare no ponto crítico: <strong>o acervo não pode ter um <code>if</code> perguntando "que tipo de
+item é este?"</strong> para calcular a duração. Cada item sabe calcular a si próprio; o acervo
+apenas pergunta. Se você escrever <code>if (item instanceof Filme)</code> na classe do acervo,
+o desafio falhou no seu propósito — mesmo que o programa imprima os números certos.
+</p>
+
+<h3>2.2 O acervo</h3>
+
+<p>
+Uma classe que guarda os itens e oferece estas operações. As assinaturas exatas (nomes, tipos de
+retorno, checked vs. unchecked) são <strong>decisão sua</strong> — e você vai precisar defendê-las
+no code review.
+</p>
+
+<table class="dados">
+  <tr><th>Operação</th><th>Recebe</th><th>Devolve</th><th>Falha quando</th></tr>
+  <tr>
+    <td><strong>catalogar</strong></td>
+    <td>um item</td><td>—</td>
+    <td>já existe item com o mesmo <code>codigo</code> → erro de <em>item duplicado</em></td>
+  </tr>
+  <tr>
+    <td><strong>buscar por código</strong></td>
+    <td>código</td><td>o item</td>
+    <td>não existe → sua escolha: exceção ou <code>Optional</code>. Justifique.</td>
+  </tr>
+  <tr>
+    <td><strong>listar tudo</strong></td>
+    <td>—</td><td>coleção de itens</td>
+    <td>nunca — mas quem recebe a lista <strong>não pode</strong> alterar o acervo por ela</td>
+  </tr>
+  <tr>
+    <td><strong>agrupar por tipo</strong></td>
+    <td>—</td><td>mapa: tipo → itens daquele tipo</td>
+    <td>nunca</td>
+  </tr>
+  <tr>
+    <td><strong>duração total</strong></td>
+    <td>—</td><td>minutos somados de todo o acervo</td>
+    <td>nunca</td>
+  </tr>
+  <tr>
+    <td><strong>sessão da noite</strong></td>
+    <td>minutos disponíveis</td><td>itens escolhidos, na ordem escolhida</td>
+    <td>minutos negativos → argumento inválido</td>
+  </tr>
+</table>
+
+<h3>2.3 A regra da sessão da noite</h3>
+
+<p>
+Duas horas de luz. O que cabe? A regra é <strong>gulosa e determinística</strong> — implemente
+exatamente assim, para que sua saída bata com a esperada:
+</p>
+
+<ol>
+  <li>Descarte os itens em estado <code>ILEGIVEL</code> — não dá para ler o que virou mofo.</li>
+  <li>Ordene os restantes por duração <strong>decrescente</strong>. Empate? Desempate por título em ordem alfabética.</li>
+  <li>Percorra a lista ordenada: inclua o item se ele couber no tempo <em>restante</em>; se não couber, pule e continue para o próximo.</li>
+  <li>Devolva os itens incluídos, na ordem em que foram incluídos.</li>
+</ol>
+
+<p class="nota">
+Sim, guloso não dá a melhor combinação possível. Guarde essa incomodação: ela tem nome, e a
+gente conversa sobre isso no review.
+</p>
+
+<h2 class="quebra">3. Regras que separam o júnior do sênior</h2>
+
+<p>Estas não são detalhes. São o coração do desafio.</p>
+
+<div class="caixa">
+  <h4>R1 — Um item inválido não deve conseguir nascer</h4>
+  <p>
+    Título vazio, ano em 2049, BPM zero ou negativo, dificuldade 9, duração negativa: o objeto
+    <strong>não pode ser construído</strong>. Nada de criar e depois torcer para alguém validar
+    lá na frente. Onde vive essa validação, e que tipo de erro ela sinaliza?
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R2 — Dois itens são o mesmo item quando têm o mesmo código</h4>
+  <p>
+    Um <code>Filme</code> e uma <code>Partitura</code> com código <code>PT-001</code> são, para o
+    acervo, o mesmo registro. Faça o acervo enxergar isso <em>sem</em> varrer a lista item a item
+    comparando strings. Existe estrutura de dados para isso; existe também um par de métodos que
+    você precisa sobrescrever para que ela funcione. Descubra quais — e o que acontece se você
+    sobrescrever só um dos dois.
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R3 — Quem recebe a lista não manda no acervo</h4>
+  <p>
+    Se alguém fizer <code>acervo.listarTudo().clear()</code>, o acervo <strong>não</strong> pode
+    ficar vazio. Pesquise por "cópia defensiva" e "coleção imutável". Escolha um caminho e saiba
+    dizer o que ele custa.
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R4 — Erros do acervo são do acervo</h4>
+  <p>
+    Catalogar duplicado e buscar inexistente merecem exceções <em>suas</em>, com nome que conte a
+    história, e não um <code>System.out.println("erro")</code> escondido dentro do método. Decida
+    entre <em>checked</em> e <em>unchecked</em> — e tenha um motivo. "Foi o que apareceu no
+    tutorial" não é motivo.
+  </p>
+</div>
+
+<div class="caixa">
+  <h4>R5 — Uma ficha por item, escrita por ele mesmo</h4>
+  <p>
+    Cada item sabe se descrever em uma linha (veja o formato na seção 4). O acervo imprime;
+    ele não monta o texto de cada tipo.
+  </p>
+</div>
+
+<h2>4. Exemplo — entrada e saída esperadas</h2>
+
+<h3>4.1 Acervo de exemplo (monte-o na <code>Main</code>)</h3>
+
+<table class="dados">
+  <tr><th>Código</th><th>Tipo</th><th>Título</th><th class="num">Ano</th><th>Conservação</th><th>Dados próprios</th></tr>
+  <tr><td>PT-001</td><td>Partitura</td><td>Prelúdio em Sol</td><td class="num">1717</td><td>INTACTO</td><td>J. S. Bach · dif. 4 · 42 compassos · 60 bpm</td></tr>
+  <tr><td>PT-002</td><td>Partitura</td><td>Take On Me (arranjo p/ violino)</td><td class="num">1985</td><td>DESGASTADO</td><td>a-ha · dif. 2 · 96 compassos · 84 bpm</td></tr>
+  <tr><td>PT-003</td><td>Partitura</td><td>Future Days</td><td class="num">2013</td><td>ILEGIVEL</td><td>P. Yorn · dif. 3 · 64 compassos · 76 bpm</td></tr>
+  <tr><td>FL-001</td><td>Filme</td><td>Curtis e Viper 2</td><td class="num">2013</td><td>INTACTO</td><td>dir. desconhecido · 118 min</td></tr>
+  <tr><td>SR-001</td><td>Série</td><td>Além da Imaginação</td><td class="num">1959</td><td>DANIFICADO</td><td>temporadas [36, 29] episódios · 25 min/ep</td></tr>
+</table>
+
+<h3>4.2 Saída esperada</h3>
+
+<pre><code>=== ACERVO DA QUARENTENA — JACKSON, WY ===
+Itens catalogados: 5
+Duração total: 1753,7 min (29h13)
+
+--- POR TIPO ---
+Partitura (3)
+  [PT-001] Prelúdio em Sol (1717) · J. S. Bach · dif. 4/5 · 2,8 min · INTACTO
+  [PT-002] Take On Me (arranjo p/ violino) (1985) · a-ha · dif. 2/5 · 4,6 min · DESGASTADO
+  [PT-003] Future Days (2013) · P. Yorn · dif. 3/5 · 3,4 min · ILEGIVEL
+Filme (1)
+  [FL-001] Curtis e Viper 2 (2013) · dir. desconhecido · 118,0 min · INTACTO
+Serie (1)
+  [SR-001] Além da Imaginação (1959) · 2 temporadas · 65 episódios · 1625,0 min · DANIFICADO
+
+--- SESSÃO DA NOITE (120 min disponíveis) ---
+  [FL-001] Curtis e Viper 2 — 118,0 min
+  Restam 2,0 min — nem o Bach cabe.
+Total da sessão: 118,0 min de 120,0 min
+
+--- SESSÃO DA NOITE (130 min disponíveis) ---
+  [FL-001] Curtis e Viper 2 — 118,0 min
+  [PT-002] Take On Me (arranjo p/ violino) — 4,6 min
+  [PT-001] Prelúdio em Sol — 2,8 min
+Total da sessão: 125,4 min de 130,0 min
+
+--- TENTATIVAS INVÁLIDAS ---
+Catalogar PT-001 de novo -> ItemDuplicadoException: código PT-001 já está no acervo
+Buscar XX-999             -> ItemNaoEncontradoException: código XX-999 não existe
+Partitura com 0 bpm       -> IllegalArgumentException: bpm deve ser maior que zero</code></pre>
+
+<div class="caixa alerta">
+  <h4>Sobre os números — confira sua matemática</h4>
+  <ul>
+    <li>PT-001: (42 × 4) ÷ 60 = <strong>2,8</strong> min</li>
+    <li>PT-002: (96 × 4) ÷ 84 = <strong>4,571…</strong> → exibe <strong>4,6</strong></li>
+    <li>SR-001: (36 + 29) × 25 = <strong>1625,0</strong> min</li>
+    <li>PT-003: (64 × 4) ÷ 76 = <strong>3,368…</strong> → exibe <strong>3,4</strong> (entra no total, mas nunca na sessão da noite)</li>
+    <li>Total: 2,8 + 4,571… + 3,368… + 118 + 1625 = <strong>1753,7</strong> min</li>
+  </ul>
+  <p style="margin-bottom:0">
+    Exiba sempre com <strong>uma casa decimal e vírgula</strong> (padrão pt-BR). Mas
+    <strong>não arredonde antes de somar</strong> — some os valores cheios e arredonde só na hora
+    de imprimir. Se você arredondar cedo, o total vai fechar diferente. Isso não é frescura de
+    professor: é a categoria de bug que derruba fechamento contábil em produção.
+  </p>
+</div>
+
+<h2 class="quebra">5. Antes de escrever a primeira linha de código</h2>
+
+<p>
+Não abra o editor ainda. Corrigir um plano custa cinco minutos; corrigir código já escrito custa
+uma tarde. Me responda por escrito — pode ser num <code>PLANO.md</code> dentro da pasta do desafio:
+</p>
+
+<ol>
+  <li><strong>O problema, com suas palavras.</strong> Sem repetir o enunciado. O que este programa
+      precisa fazer, em três frases suas?</li>
+  <li><strong>Seu desenho.</strong> Quais classes vão existir? Quem herda de quem, ou quem implementa
+      o quê? Por que você escolheu classe abstrata <em>ou</em> interface — e o que a outra opção
+      te daria de diferente?</li>
+  <li><strong>Suas estruturas de dados.</strong> O que guarda os itens dentro do acervo:
+      <code>ArrayList</code>? <code>HashMap</code>? <code>HashSet</code>? Escolha uma e diga o que
+      ela te dá de graça e o que ela te cobra. Dica de rumo: pense em qual operação do acervo é a
+      mais frequente.</li>
+</ol>
+
+<p>
+Me traga esse plano <em>antes</em> de codar. Se tiver furo grave, eu pergunto — não conserto.
+</p>
+
+<h2>6. Critérios de aceite</h2>
+
+<p>Está pronto quando <strong>todos</strong> estes forem verdade:</p>
+
+<ol class="aceite">
+  <li>Compila e roda com <code>javac *.java &amp;&amp; java Main</code>, sem dependência externa.</li>
+  <li>Existe um tipo comum (interface ou classe abstrata) que os três tipos de item cumprem.</li>
+  <li>O cálculo de duração é polimórfico: <strong>zero</strong> <code>instanceof</code> e
+      <strong>zero</strong> <code>switch</code> por tipo dentro da classe do acervo.</li>
+  <li>O estado de conservação é um <code>enum</code>, não uma <code>String</code> solta.</li>
+  <li>Construtores rejeitam dados inválidos (R1), com mensagem que diz o que está errado.</li>
+  <li>Catalogar código duplicado lança uma exceção sua, com mensagem útil.</li>
+  <li>Buscar código inexistente tem comportamento definido e documentado por você.</li>
+  <li>Alterar a coleção devolvida pelo acervo <strong>não</strong> altera o acervo (R3).</li>
+  <li>O agrupamento por tipo devolve um <code>Map</code>.</li>
+  <li>A sessão da noite segue a regra gulosa da seção 2.3, à risca, e ignora <code>ILEGIVEL</code>.</li>
+  <li>A saída reproduz os números do exemplo 4.2 (formato pode variar; os números, não).</li>
+  <li>A <code>Main</code> demonstra também os três casos de erro da seção 4.2 — com o programa
+      continuando vivo depois de cada um.</li>
+  <li>Nomes em português ou inglês, mas <strong>consistentes</strong> no projeto inteiro. Escolha um
+      idioma e não misture (olho no seu <code>classificaoDeImc()</code> convivendo com
+      <code>getName()</code>).</li>
+</ol>
+
+<h3>Bônus — só depois que o principal estiver de pé</h3>
+<ul>
+  <li>Refaça <em>agrupar por tipo</em> e <em>duração total</em> com Stream API
+      (<code>Collectors.groupingBy</code>, <code>mapToDouble</code>). Compare com sua versão de laço:
+      qual ficou mais legível? Guarde as duas para o review.</li>
+  <li>Faça os itens implementarem <code>Comparable</code> e discuta: ordem natural ou
+      <code>Comparator</code> externo?</li>
+  <li>Menu interativo com <code>Scanner</code>, tratando entrada não numérica sem quebrar.</li>
+  <li>Um método <code>autoTeste()</code> na <code>Main</code> com <code>assert</code> ou
+      <code>if</code> + mensagem, conferindo os números da seção 4.2 sozinho.</li>
+</ul>
+
+<div class="caixa proibido">
+  <h4>O que não vale</h4>
+  <ul style="margin-bottom:0">
+    <li>Pedir a solução pronta ao Claude (o repositório está em Modo Yoda — ele vai te devolver
+        perguntas). Dúvida conceitual, erro de compilação, "o que é uma interface": <em>pode</em>
+        perguntar, e deve.</li>
+    <li>Colar código de fórum que você não sabe explicar linha a linha. No review, eu pergunto.</li>
+    <li>Bibliotecas externas. JDK puro.</li>
+    <li>Um arquivo gigante com tudo dentro. Uma classe por arquivo.</li>
+  </ul>
+</div>
+
+<h2>7. Por que este desafio existe</h2>
+
+<p>
+Você já sabe fazer um programa funcionar. Este desafio é sobre a próxima camada: fazer um programa
+<strong>aceitar mudança</strong>. Daqui a duas semanas, a comunidade resgata uma caixa de discos de
+vinil e quer catalogar áudio também. Se o seu desenho estiver certo, você acrescenta uma classe e
+não toca em <em>nenhuma</em> linha do acervo. Se estiver errado, você vai abrir <code>if</code>s em
+quatro lugares diferentes e esquecer o quinto.
+</p>
+
+<p>
+Isso tem nome no mercado — Princípio Aberto/Fechado, o "O" de SOLID — e é exatamente o que uma
+banca sênior procura quando propõe um take-home aparentemente bobo de "catálogo de produtos".
+O júnior entrega funcionando. O sênior entrega funcionando e, quando perguntam "e se aparecer um
+tipo novo?", responde sorrindo. É também o mesmo padrão por trás de <code>List</code>,
+<code>Map</code> e do <code>Comparator</code> que você vai usar aqui: contrato no meio, implementações
+trocáveis nas pontas. Quando você chegar no Spring, vai reencontrar essa mesma ideia em cada
+<code>@Repository</code> que você injeta por interface.
+</p>
+
+<blockquote>
+  <p>
+    Vai errar. É pra errar. O erro é o professor mais honesto que você vai ter — ele nunca mente
+    para agradar. Quando travar, me traga o que você tentou, não o que você quer que eu escreva.
+  </p>
+</blockquote>
+
+<div class="rodape">
+  Mestre Yoda · Desafio 01 · <em>Fazer, ou não fazer. Tentativa não há — mas antes disso, tente.</em>
+</div>
+
+</body>
+</html>

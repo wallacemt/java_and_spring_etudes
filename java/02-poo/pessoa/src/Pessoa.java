@@ -47,7 +47,7 @@ public class Pessoa {
     }
 
     public double getWeight() {
-        return this.height;
+        return this.weight;
     }
 
     public double calcImc() {

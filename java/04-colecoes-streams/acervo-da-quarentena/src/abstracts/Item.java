@@ -3,10 +3,6 @@ package abstracts;
 import utils.Conservation;
 import utils.ItemType;
 
-import java.time.Year;
-import java.util.Calendar;
-import java.util.Date;
-
 
 public abstract class Item {
     private String code;
@@ -16,7 +12,7 @@ public abstract class Item {
 
     public Item(String code, String title, int year, Conservation conservation) {
         validateCode(code);
-        validadeTitle(title);
+        validateTitle(title);
         validateYear(year);
         validateConservation(conservation);
 
@@ -40,7 +36,7 @@ public abstract class Item {
         }
     }
 
-    private void validadeTitle(String title) {
+    private void validateTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title has cannot empty");
         }
@@ -57,7 +53,7 @@ public abstract class Item {
 
     public abstract String describe();
 
-    public abstract String getType();
+    public abstract ItemType getType();
 
     public String getCode() {
         return code;
@@ -82,9 +78,9 @@ public abstract class Item {
             return false;
         }
 
-        Item outher = (Item) obj;
+        Item itemEquals = (Item) obj;
 
-        return this.code.equals(outher.code);
+        return this.code.equals(itemEquals.code);
     }
 
     @Override

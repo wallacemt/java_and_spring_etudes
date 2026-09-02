@@ -27,13 +27,13 @@ public class MusicalScore extends Item {
 
     private void validateBpm(int bpm) {
         if (bpm <= 0) {
-            throw new IllegalArgumentException("BPM needs gratter than zero!");
+            throw new IllegalArgumentException("BPM needs greatter than zero!");
         }
     }
 
     private void validateCompass(int compass) {
         if (compass <= 0) {
-            throw new IllegalArgumentException("Compaas needs gratter than zero!");
+            throw new IllegalArgumentException("Compass needs greatter than zero!");
         }
     }
 
@@ -62,8 +62,8 @@ public class MusicalScore extends Item {
     }
 
     @Override
-    public String getType() {
-        return ItemType.MUSICAL_SCORE.name();
+    public ItemType getType() {
+        return ItemType.MUSICAL_SCORE;
     }
 
     public String getComposition() {

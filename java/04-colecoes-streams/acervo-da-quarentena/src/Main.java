@@ -16,7 +16,7 @@ public class Main {
     private static DecimalFormat df;
 
     static {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new java.util.Locale("pt", "BR"));
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
         df = new DecimalFormat("0.0", symbols);
     }
 
@@ -31,7 +31,7 @@ public class Main {
             collectionStore.catalog(new MusicalScore("PT-003", "Future Days", 2013,
                     Conservation.ILLEGIBLE, "P. Yorn", 3, 64, 76));
             collectionStore.catalog(new Movie("FL-001", "Curtis e Viper 2", 2013,
-                    Conservation.INTACT, "dir. desconhecido", 118.0));
+                    Conservation.INTACT, "desconhecido", 118.0));
             collectionStore.catalog(new Serie("SR-001", "Além da Imaginação", 1959,
                     Conservation.DEMAGED, new int[]{36, 29}, 25.0));
         } catch (DuplicatedItemException e) {
@@ -51,8 +51,8 @@ public class Main {
     }
 
     private static void printReport(CollectionStore collectionStore) {
-        System.out.println("=== Relatório principal DA QUARENTENA — JACKSON, WY ===");
-        System.out.println("Itens catalogados: " + collectionStore.obterTotalItens());
+        System.out.println("=== ACERVO DA QUARENTENA — JACKSON, WY ===");
+        System.out.println("Itens catalogados: " + collectionStore.getAllItens());
 
         double totalDuration = collectionStore.getTotalDuration();
         long hours = (long) totalDuration / 60;
@@ -62,9 +62,9 @@ public class Main {
 
         // Agrupar por tipo
         System.out.println("\n--- POR TIPO ---");
-        Map<String, List<Item>> byType = collectionStore.groupedByType();
+        Map<ItemType, List<Item>> byType = collectionStore.groupedByType();
 
-        for (Map.Entry<String, List<Item>> entry : byType.entrySet()) {
+        for (Map.Entry<ItemType, List<Item>> entry : byType.entrySet()) {
             System.out.println(entry.getKey() + " (" + entry.getValue().size() + ")");
 
             for (Item item : entry.getValue()) {

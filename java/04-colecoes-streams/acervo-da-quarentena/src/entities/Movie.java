@@ -43,8 +43,8 @@ public class Movie extends Item {
     }
 
     @Override
-    public String getType() {
-        return ItemType.MOVIE.name();
+    public ItemType getType() {
+        return ItemType.MOVIE;
     }
 
     public String getDirector() {

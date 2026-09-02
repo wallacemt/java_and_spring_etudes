@@ -56,8 +56,8 @@ public class Serie extends Item {
     }
 
     @Override
-    public String getType() {
-        return ItemType.SERIE.name();
+    public ItemType getType() {
+        return ItemType.SERIE;
     }
 
     public int[] getEpisodesPerSeason() {

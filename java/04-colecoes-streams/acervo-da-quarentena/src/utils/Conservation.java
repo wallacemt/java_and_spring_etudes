@@ -4,7 +4,7 @@ public enum Conservation {
     INTACT("INTACT"),
     WORN("WORN"),
     DEMAGED("DEMAGED"),
-    ILLEGIBLE("ILEGIBLE");
+    ILLEGIBLE("ILLEGIBLE");
     private final String description;
 
     Conservation(String description) {

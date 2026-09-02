@@ -36,7 +36,7 @@ public class CollectionStore {
         );
     }
 
-    public Map<String, List<Item>> groupedByType() {
+    public Map<ItemType, List<Item>> groupedByType() {
         return itens.values().stream()
                 .collect(Collectors.groupingBy(Item::getType));
     }
@@ -74,7 +74,7 @@ public class CollectionStore {
         return sessao;
     }
 
-    public int obterTotalItens() {
+    public int getAllItens() {
         return itens.size();
     }
 

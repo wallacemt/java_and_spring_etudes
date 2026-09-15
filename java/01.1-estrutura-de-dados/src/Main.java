@@ -1,12 +1,15 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Main {
     static void main(String[] args) {
-        Stack<String> stack = new Stack<String>();
+        Queue<String> queue = new LinkedList<>();
 
-        stack.push("Pagina 1");
-        stack.push("Pagina 2");
-        System.out.println(stack.pop());
+        queue.offer("Client 1");
+        queue.offer("Client 2");
+        System.out.printf(queue.poll());
+
 
     }
 }

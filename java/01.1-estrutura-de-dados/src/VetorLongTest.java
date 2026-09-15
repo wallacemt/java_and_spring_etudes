@@ -17,4 +17,6 @@ public class VetorLongTest {
 
         System.out.println("Tempo de execucao: " + (endTime - startTime) + "ms");
     }
+
+
 }

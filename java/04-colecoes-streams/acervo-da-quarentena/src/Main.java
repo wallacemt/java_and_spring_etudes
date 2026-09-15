@@ -16,7 +16,7 @@ public class Main {
     private static DecimalFormat df;
 
     static {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.forLanguageTag("pt-BR"));
         df = new DecimalFormat("0.0", symbols);
     }
 

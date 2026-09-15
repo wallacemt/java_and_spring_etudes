@@ -97,15 +97,33 @@ public class CollectionStoreTest {
     }
 
     @Test
-    @DisplayName("Em sessao noturna items Inelegivel nunca entra na lista")
+    @DisplayName("Em sessão noturna items inelegíveis nunca entram na lista")
     void naSessaoNoturnaItemInelegivelNaoEntraNaFila() {
         List<Item> itemsSessaoNoturnaUmItem = collectionStoreTest.nightSession(120);
         List<Item> itemsSessaoNoturnaTresItems = collectionStoreTest.nightSession(130);
-        Item inellegibleItem = new MusicalScore("PT-003", "Future Days", 2013, Conservation.ILLEGIBLE, "P. Yorn", 3, 64, 76);
 
-        assertNotEquals(List.of(inellegibleItem), itemsSessaoNoturnaUmItem);
-        assertNotEquals(List.of(inellegibleItem), itemsSessaoNoturnaTresItems);
+        Item inellegibleItem = new MusicalScore(
+                "PT-003",
+                "Future Days",
+                2013,
+                Conservation.ILLEGIBLE,
+                "P. Yorn",
+                3,
+                64,
+                76
+        );
+
+        assertFalse(
+                itemsSessaoNoturnaUmItem.stream()
+                        .anyMatch(item -> item.getCode().equals("PT-003"))
+        );
+
+        assertFalse(
+                itemsSessaoNoturnaTresItems.stream()
+                        .anyMatch(item -> item.getCode().equals("PT-003"))
+        );
     }
+
 
 
     @Test

@@ -42,7 +42,7 @@ public abstract class Item {
         }
     }
 
-    public void validateCode(String code) {
+    private void validateCode(String code) {
         if (code == null || code.trim().isEmpty()) {
             throw new IllegalArgumentException("Code has cannot empty: " + code);
         }

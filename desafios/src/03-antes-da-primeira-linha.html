@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Desafio 03 — Antes da Primeira Linha</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+
+  :root {
+    --ink:      #1c1c1c;
+    --muted:    #5b6168;
+    --line:     #d8d5cd;
+    --accent:   #6b4f2a;
+    --accent-2: #2f5d50;
+    --code-bg:  #f5f3ee;
+    --warn-bg:  #fbf3e4;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.55;
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.25;
+    page-break-after: avoid;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin: 0 0 2mm 0;
+    letter-spacing: -0.4pt;
+  }
+  h2 {
+    font-size: 13.5pt;
+    margin: 9mm 0 3mm 0;
+    padding-bottom: 1.5mm;
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 11.5pt;
+    margin: 6mm 0 2mm 0;
+    color: var(--accent-2);
+  }
+  h4 { font-size: 10.5pt; margin: 4mm 0 1.5mm 0; }
+
+  p { margin: 0 0 3mm 0; text-align: justify; }
+  ul, ol { margin: 0 0 3mm 0; padding-left: 6mm; }
+  li { margin-bottom: 1.4mm; }
+  strong { color: #000; }
+
+  .capa {
+    border-bottom: 3px double var(--accent);
+    padding-bottom: 5mm;
+    margin-bottom: 6mm;
+  }
+  .eyebrow {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.5pt;
+    letter-spacing: 1.6pt;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2mm;
+  }
+  .subtitulo {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11pt;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 4mm;
+  }
+
+  .meta {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+  }
+  .meta div { display: table-row; }
+  .meta span {
+    display: table-cell;
+    padding: 1.2mm 3mm 1.2mm 0;
+    vertical-align: top;
+  }
+  .meta span:first-child {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6pt;
+    font-size: 8pt;
+    width: 34mm;
+    padding-top: 1.6mm;
+  }
+
+  .meta span.badge {
+    display: inline-block;
+    background: #2f5d50;
+    color: #fff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8pt;
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+    padding: 1mm 2.5mm;
+    border-radius: 2px;
+  }
+
+  blockquote {
+    margin: 4mm 0;
+    padding: 3mm 5mm;
+    border-left: 3px solid var(--accent);
+    background: var(--warn-bg);
+    font-style: italic;
+    color: #3a3a3a;
+  }
+  blockquote p { margin: 0; }
+
+  table.dados {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.8pt;
+    margin: 3mm 0 4mm 0;
+    page-break-inside: avoid;
+  }
+  table.dados th {
+    background: #efece4;
+    text-align: left;
+    padding: 1.8mm 2mm;
+    border-bottom: 1.5px solid var(--accent);
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
+  }
+  table.dados td {
+    padding: 1.8mm 2mm;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.dados tr:nth-child(even) td { background: #faf9f6; }
+  td.num, th.num { text-align: right; }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-2);
+    padding: 3mm 4mm;
+    font-family: "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 8.6pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    page-break-inside: avoid;
+    margin: 2mm 0 4mm 0;
+  }
+  code {
+    font-family: "Consolas", "DejaVu Sans Mono", monospace;
+    font-size: 9pt;
+    background: var(--code-bg);
+    padding: 0.3mm 1mm;
+    border-radius: 2px;
+  }
+  pre code { background: none; padding: 0; font-size: inherit; }
+
+  .caixa {
+    border: 1px solid var(--line);
+    background: #fbfaf7;
+    padding: 3.5mm 4mm;
+    margin: 3mm 0 4mm 0;
+    page-break-inside: avoid;
+  }
+  .caixa h4 { margin-top: 0; }
+  .caixa.alerta { background: var(--warn-bg); border-color: #d9c39a; }
+  .caixa.proibido { background: #fbf0f0; border-color: #dcbcbc; }
+  .caixa.ok { background: #f1f6f2; border-color: #b9cfbe; }
+
+  ol.aceite { list-style: none; padding-left: 0; counter-reset: ac; }
+  ol.aceite li {
+    counter-increment: ac;
+    padding-left: 9mm;
+    position: relative;
+    margin-bottom: 2mm;
+  }
+  ol.aceite li::before {
+    content: "\2610";
+    position: absolute;
+    left: 0;
+    top: -0.3mm;
+    font-size: 11pt;
+    color: var(--accent);
+  }
+
+  .quebra { page-break-before: always; }
+  .rodape {
+    margin-top: 8mm;
+    padding-top: 3mm;
+    border-top: 1px solid var(--line);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    text-align: center;
+    font-style: italic;
+  }
+  .nota { font-size: 9pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <div class="eyebrow">Desafios &nbsp;·&nbsp; Java + Maven + JUnit &nbsp;·&nbsp; Nº 03</div>
+  <h1>Antes da Primeira Linha</h1>
+  <div class="subtitulo">Onde o teste chega antes do código — e o projeto ganha um build de verdade</div>
+  <div class="meta">
+    <div><span>Nível</span><span>Médio-difícil &nbsp; <span class="badge">nova ferramenta + nova ordem</span></span></div>
+    <div><span>Stack</span><span>Java 21 + Maven 3.9 + JUnit 6</span></div>
+    <div><span>Solução em</span><span><code>java/04-colecoes-streams/acervo-da-quarentena/</code> (reestruturado)</span></div>
+    <div><span>Tempo estimado</span><span>5 a 8 horas, em três sentadas (um Ato por sentada)</span></div>
+    <div><span>Pré-requisito</span><span>desafio 02 aprovado — a suíte que você escreveu é o alicerce deste</span></div>
+    <div><span>Conceitos novos</span><span><code>pom.xml</code>, <code>mvn test</code>, ciclo <em>red-green-refactor</em>,
+      <code>@ParameterizedTest</code>, <code>@BeforeEach</code>, injeção de <code>Clock</code>,
+      teste de fronteira</span></div>
+  </div>
+</div>
+
+<h2>1. O contexto</h2>
+
+<p>O acervo está catalogado e tem rede. Na semana passada a Maria conferiu os números e não achou
+nada — o que, vindo dela, é elogio. Agora apareceu o problema seguinte, e ele não é técnico: as
+pessoas começaram a <strong>levar as coisas para casa</strong>. Uma partitura sumiu por três
+semanas. O DVD do Curtis e Viper 2 voltou riscado. Ninguém sabe quem está com o quê.</p>
+
+<p>A comunidade quer um balcão de empréstimo. Regras simples, ditas em voz alta na reunião:
+item ilegível não sai; o que já saiu não sai de novo; e no fim do mês alguém precisa saber quais
+itens estão atrasados.</p>
+
+<blockquote>
+  <p>"E se der problema, a gente conserta depois." — "Não. Desta vez a gente escreve o problema
+  antes."</p>
+</blockquote>
+
+<p>Nos dois desafios anteriores você fez na ordem natural: construiu, depois testou. Funciona, e
+foi assim que você aprendeu JUnit. Mas repare no que aconteceu no desafio 02 — você escreveu um
+teste que não podia falhar e só descobriu porque alguém foi mutar o seu código. Isso não é azar:
+é consequência de escrever o teste <em>depois</em>, quando você já sabe que o código funciona e a
+sua cabeça está procurando confirmação em vez de contradição.</p>
+
+<p>Neste desafio a ordem inverte. O teste vem primeiro, e ele precisa <strong>falhar</strong>
+antes de você escrever a implementação. Um teste que nunca foi visto vermelho é um teste em que
+ninguém deveria confiar — e agora você vai ter a prova de que o seu foi.</p>
+
+<h2>2. O que você vai construir</h2>
+
+<p>Três atos, ordem obrigatória. O Ato I não muda comportamento nenhum; o Ato II não adiciona
+funcionalidade nenhuma; o Ato III é onde nasce código novo — e nasce depois do teste.</p>
+
+<table class="dados">
+  <tr><th>Ato</th><th>O que é</th><th>Por que nesta ordem</th></tr>
+  <tr>
+    <td><strong>I — A bancada</strong></td>
+    <td>Migrar o projeto para Maven. <code>pom.xml</code>, <code>src/main/java</code>,
+      <code>src/test/java</code>, <code>mvn test</code> verde com os seus 30 testes atuais.</td>
+    <td>Zero mudança de lógica. Se algum teste quebrar, foi a migração — e você quer descobrir
+      isso agora, não misturado com código novo.</td>
+  </tr>
+  <tr>
+    <td><strong>II — Afiar a rede</strong></td>
+    <td>Consertar as fraquezas que a sua suíte ainda tem: fronteira, <code>@BeforeEach</code>,
+      testes parametrizados.</td>
+    <td>Você vai apoiar código novo nesta rede. Ela precisa estar afiada antes, não depois.</td>
+  </tr>
+  <tr>
+    <td><strong>III — O balcão</strong></td>
+    <td>A funcionalidade de empréstimo, escrita <strong>teste primeiro</strong>, em ciclos
+      <em>red-green-refactor</em> com prova no Git.</td>
+    <td>É o desafio. Os dois primeiros atos existem para que este seja possível.</td>
+  </tr>
+</table>
+
+<div class="caixa alerta">
+  <h4>Sobre o seu histórico de endereços</h4>
+  <p>No desafio 02, três entregas suas estavam <em>certas no conteúdo e erradas no lugar</em>:
+  <code>mutation.md</code> em vez de <code>MUTACOES.md</code>, testes em <code>test/src/</code>
+  quando o desenho era <code>test/</code>, e um <code>ESTRUTURA.md</code> novo dentro da pasta do
+  desafio enquanto o da raiz seguia desatualizado. Não é detalhe: em time, arquivo no lugar errado
+  é arquivo que ninguém acha, e documentação duplicada é documentação que diverge.</p>
+  <p>Por isso, neste enunciado, <strong>todo caminho está escrito por extenso e a partir da raiz
+  do repositório</strong>. Confira cada um antes de dizer "pronto".</p>
+</div>
+
+<h2>3. Ato I — A bancada (Maven)</h2>
+
+<p>Até aqui você compilou com um comando gigante e um <code>.jar</code> baixado à mão. Funcionou
+para aprender, e agora atrapalha: não dá para declarar dependências, não dá para versionar o
+build, não dá para outra pessoa rodar o seu projeto sem receber instruções por mensagem.</p>
+
+<h3>3.1 A nova estrutura</h3>
+
+<pre><code>java/04-colecoes-streams/acervo-da-quarentena/
+├── pom.xml                        # NOVO — o build
+├── PLAN.md
+├── src/
+│   ├── main/java/                 # o que era src/
+│   │   ├── Main.java
+│   │   ├── abstracts/Item.java
+│   │   ├── entities/...
+│   │   ├── exceptions/...
+│   │   └── utils/...
+│   └── test/java/                 # o que era test/src/
+│       ├── ItemTest.java
+│       ├── MusicalScoreTest.java
+│       └── ...
+├── MUTACOES.md                    # sobe de test/ para a raiz do projeto
+└── TDD.md                         # NOVO — o diário do Ato III</code></pre>
+
+<p>Repare que <code>src/main/java</code> e <code>src/test/java</code> não são invenção sua nem
+minha: é a <em>convenção sobre configuração</em> do Maven. Você não precisa dizer ao Maven onde
+estão os fontes; ele já sabe, porque todo projeto Java do mundo usa esse mesmo desenho. É a
+mesma estrutura que você vai encontrar em qualquer projeto Spring.</p>
+
+<h3>3.2 O <code>pom.xml</code></h3>
+
+<p>Não vou te dar o arquivo pronto. Vou te dar a lista do que ele precisa conter, e você escreve:</p>
+
+<ul>
+  <li><code>groupId</code>, <code>artifactId</code>, <code>version</code> — a identidade do projeto.</li>
+  <li><code>maven.compiler.release</code> = <code>21</code>, e
+    <code>project.build.sourceEncoding</code> = <code>UTF-8</code>. Sem o segundo, os seus
+    acentos viram lixo em outra máquina.</li>
+  <li>A dependência do JUnit, em escopo <code>test</code>. Procure por
+    <code>org.junit:junit-bom</code> no Maven Central e use-o em
+    <code>&lt;dependencyManagement&gt;</code> — na data em que escrevo, a versão é
+    <strong>6.1.3</strong>, a mesma do <code>.jar</code> que você baixou no desafio 02.
+    <strong>Confira se saiu mais nova.</strong></li>
+  <li><code>maven-surefire-plugin</code> (o que roda os testes) e
+    <code>maven-compiler-plugin</code>. Estáveis hoje: <strong>3.5.6</strong> e
+    <strong>3.16.0</strong>. Confira também.</li>
+  <li>Configure o compilador para emitir <code>-Xlint:all</code>. Você limpou os quatro avisos no
+    desafio 02 — agora faça o build lembrar disso por você.</li>
+</ul>
+
+<div class="caixa">
+  <h4>Uma pergunta para você responder no <code>PLAN.md</code></h4>
+  <p>O que <code>&lt;scope&gt;test&lt;/scope&gt;</code> muda, na prática? O que aconteceria se
+  você esquecesse essa linha? Responda antes de pesquisar a resposta bonita: pense no que vai
+  parar dentro do <code>.jar</code> que você entrega para o cliente.</p>
+</div>
+
+<h3>3.3 Como saber que o Ato I terminou</h3>
+
+<pre><code>cd java/04-colecoes-streams/acervo-da-quarentena
+mvn -q test</code></pre>
+
+<p>Precisa terminar com <code>Tests run: 30, Failures: 0, Errors: 0, Skipped: 0</code> e
+<code>BUILD SUCCESS</code>. Nenhuma linha de lógica alterada — o <code>git diff</code> do Ato I
+deve mostrar arquivos <em>movidos</em>, o <code>pom.xml</code> <em>criado</em>, e nada mais.
+Use <code>git mv</code>: assim o Git registra rename em vez de "apagou 9 arquivos e criou 9".</p>
+
+<p>Ajuste o <code>.gitignore</code>: sai <code>junit-console.jar</code> (apague o arquivo, o Maven
+baixa sozinho agora), entra <code>target/</code>.</p>
+
+<h2>4. Ato II — Afiar a rede</h2>
+
+<p>A sua suíte do desafio 02 está boa e tem três buracos que eu encontrei mutando o seu código.
+Nenhum deles é difícil de fechar. Todos ensinam algo diferente.</p>
+
+<h3>4.1 O buraco da fronteira</h3>
+
+<p>A sua validação de ano aceita <code>1500..2013</code>. Os seus testes usam
+<strong>1200</strong> e <strong>2049</strong>. Eu troquei <code>year &gt; 2013</code> por
+<code>year &gt; 2014</code> no seu código e <strong>a sua suíte inteira continuou verde</strong>.</p>
+
+<p>Pense em onde os bugs realmente moram: quase nunca no meio do intervalo, quase sempre na borda
+— o <code>&lt;</code> que devia ser <code>&lt;=</code>, o <code>-1</code> esquecido. Testar 1200
+prova pouco; testar o par que cerca a fronteira prova o comportamento.</p>
+
+<p>Feche esse buraco no ano, e depois olhe com o mesmo olho para <code>diff</code> (faixa 1–5) e
+<code>bpm</code>. Quando terminar, refaça a mutação <code>2013 → 2014</code> e confirme que agora
+alguém fica vermelho.</p>
+
+<h3>4.2 <code>@BeforeEach</code>, e por que não <code>@BeforeAll</code></h3>
+
+<p>Três das suas classes de teste usam <code>@BeforeAll</code> com um campo <code>static</code>
+compartilhado. Rodei a sua suíte com ordem aleatória de método e de classe: passou nas três vezes.
+Ou seja, <strong>hoje não quebra</strong>.</p>
+
+<p>Então por que mudar? Porque "hoje não quebra" e "não pode quebrar" são frases diferentes, e a
+distância entre elas é um teste novo que alguém escreve daqui a seis meses. Faça este exercício
+antes de trocar: acrescente à <code>CollectionStoreTest</code> um teste que
+<strong>catalogue</strong> um item novo no acervo compartilhado. Rode a suíte algumas vezes com
+ordem aleatória. Depois troque para <code>@BeforeEach</code> e rode de novo.</p>
+
+<p>Escreva no <code>PLAN.md</code> o que você viu, em duas ou três linhas. É o tipo de coisa que
+só convence quando acontece na sua tela.</p>
+
+<h3>4.3 Testes parametrizados</h3>
+
+<p>Você tem oito testes de construtor em <code>MusicalScoreTest</code> que diferem só nos números
+e no que esperam. Isso é candidato natural a <code>@ParameterizedTest</code> com
+<code>@CsvSource</code>.</p>
+
+<p>Converta. E então <strong>compare as duas versões e tome partido</strong>: ficou mais legível
+ou menos? Quando um caso falha, qual das duas te diz mais rápido qual caso foi? Existe resposta
+certa aqui, mas ela depende do caso — e eu quero a sua, escrita no <code>PLAN.md</code>, não a do
+primeiro blog que você abrir.</p>
+
+<h3>4.4 A dívida mais antiga do projeto</h3>
+
+<p>Critério de aceite 13 do desafio 01, aberto desde a primeira entrega: <strong>um idioma só</strong>.
+Hoje convivem <code>duracao</code>, <code>sessao</code>, <code>valids</code>,
+<code>availibleMinutes</code>, o campo <code>itens</code>, mensagens como
+<code>"duração needs greater than zero"</code>, e os typos <code>greatter</code> e
+<code>DEMAGED</code>. Escolha um idioma e aplique no projeto inteiro — código, testes e mensagens.</p>
+
+<p>Agora você tem <code>mvn test</code> e uma suíte afiada. Renomeie uma coisa de cada vez, rode,
+siga. É para ser entediante. Entediante é o objetivo — e é a diferença entre esta rodada e a 1.5,
+quando você mexeu no código sem rede e introduziu duas regressões seguidas sem perceber.</p>
+
+<h2>5. Ato III — O balcão, teste primeiro</h2>
+
+<p>Aqui nasce código novo. E a regra é uma só:</p>
+
+<div class="caixa proibido">
+  <h4>A regra do Ato III</h4>
+  <p><strong>Nenhuma linha de implementação antes de existir um teste vermelho pedindo por ela.</strong></p>
+  <p>O ciclo tem três tempos, sempre nesta ordem:</p>
+  <ul>
+    <li><strong>Red</strong> — escreva o teste. Rode. Ele precisa <em>falhar</em>. Se passou de
+      primeira, o teste está errado ou o comportamento já existia.</li>
+    <li><strong>Green</strong> — escreva o <em>mínimo</em> que faz passar. Feio pode. Ineficiente
+      pode. Errado para outros casos pode — esses casos ainda não têm teste.</li>
+    <li><strong>Refactor</strong> — agora arrume, com a suíte verde te avisando.</li>
+  </ul>
+</div>
+
+<h3>5.1 O que o balcão faz</h3>
+
+<p>Uma classe nova — o nome é seu — que cuida de empréstimos sobre o acervo que já existe.
+Comportamentos:</p>
+
+<table class="dados">
+  <tr><th>#</th><th>Comportamento</th><th>Detalhe que importa</th></tr>
+  <tr><td>1</td><td>Emprestar um item a uma pessoa</td><td>guarda quem levou, quando saiu e o prazo</td></tr>
+  <tr><td>2</td><td>Item ilegível nunca sai</td><td>a mesma regra da sessão da noite, agora aqui</td></tr>
+  <tr><td>3</td><td>Item já emprestado não sai de novo</td><td>sua exceção, com mensagem útil</td></tr>
+  <tr><td>4</td><td>Item que não existe no acervo não sai</td><td>reaproveite o que o acervo já sabe fazer</td></tr>
+  <tr><td>5</td><td>Devolver</td><td>o item volta a ficar disponível</td></tr>
+  <tr><td>6</td><td>Devolver o que não está emprestado é erro</td><td>decida qual, e defenda</td></tr>
+  <tr><td>7</td><td>Consultar se um item está disponível</td><td>—</td></tr>
+  <tr><td>8</td><td>Listar o que está emprestado</td><td>cópia defensiva, como você já sabe fazer</td></tr>
+  <tr><td>9</td><td><strong>Listar os empréstimos atrasados</strong></td><td>leia a seção 5.2 <em>antes</em> de escrever este</td></tr>
+</table>
+
+<h3>5.2 O problema do "hoje"</h3>
+
+<p>O comportamento 9 pergunta quais empréstimos passaram do prazo. Para responder, o seu código
+precisa saber que dia é hoje. A forma óbvia é chamar <code>LocalDate.now()</code> lá dentro.</p>
+
+<p>Tente escrever o teste desse jeito. Sério, tente — e repare no que acontece: para testar um
+empréstimo atrasado você precisa que "hoje" seja depois do prazo, e você não controla o relógio
+da máquina. As saídas ruins aparecem sozinhas: mudar o relógio do computador, esperar de verdade,
+ou emprestar com data no passado e torcer.</p>
+
+<div class="caixa">
+  <h4>A pergunta, e ela vale a sessão inteira</h4>
+  <p>Se o código pergunta as horas para o mundo, o teste não tem como responder. E se o
+  <em>mundo</em> fosse um parâmetro?</p>
+  <p>Procure <code>java.time.Clock</code> — em especial <code>Clock.fixed(...)</code> e
+  <code>Clock.systemDefaultZone()</code>. Depois pense em quem deveria criar esse
+  <code>Clock</code>: a sua classe, ou quem a constrói?</p>
+</div>
+
+<p>Isto tem nome — <em>injeção de dependência</em> — e é a mesma ideia que sustenta o Spring
+inteiro, que é para onde você vai depois. A versão curta: um objeto não busca o que precisa, ele
+recebe. Quando recebe, dá para entregar outra coisa no teste.</p>
+
+<h3>5.3 A prova de que você fez teste primeiro</h3>
+
+<p>No desafio 02 eu conferi a ordem dos Atos pelo histórico do Git, e ela conferiu. Vamos usar o
+mesmo mecanismo aqui, agora de propósito. Cada ciclo do Ato III são <strong>dois commits</strong>:</p>
+
+<pre><code>test: balcão recusa emprestar item ilegível     ← suíte VERMELHA neste commit
+feat: balcão recusa emprestar item ilegível     ← suíte VERDE neste commit</code></pre>
+
+<p>Eu vou fazer <code>git checkout</code> em alguns dos seus commits <code>test:</code> e rodar
+<code>mvn test</code>. Eles precisam falhar. Um commit <code>test:</code> que já passa significa
+que o código veio antes — e aí o Ato III não aconteceu, só foi narrado.</p>
+
+<p>Mantenha também um <code>TDD.md</code> curto na raiz da pasta do desafio, uma linha por ciclo:
+o que o teste pedia, e o que você escreveu de mínimo para ele passar. É onde você vai perceber,
+relendo, quantas vezes escreveu mais do que precisava.</p>
+
+<h2>6. Critérios de aceite</h2>
+
+<ol class="aceite">
+  <li><code>mvn test</code> na pasta do desafio termina em <code>BUILD SUCCESS</code>, sem falhas
+    e sem testes pulados.</li>
+  <li>Estrutura Maven: <code>src/main/java</code> e <code>src/test/java</code>. O
+    <code>junit-console.jar</code> foi apagado; <code>target/</code> está no
+    <code>.gitignore</code>.</li>
+  <li>O build compila com <code>-Xlint:all</code> e <strong>zero avisos</strong>.</li>
+  <li>A mutação <code>year &gt; 2013</code> → <code>year &gt; 2014</code> deixa a suíte
+    <strong>vermelha</strong>. O mesmo para as fronteiras de <code>diff</code> e <code>bpm</code>.</li>
+  <li>Nenhuma classe de teste usa <code>@BeforeAll</code> com estado compartilhado mutável.</li>
+  <li>Os testes de construtor de <code>MusicalScore</code> estão parametrizados.</li>
+  <li>Idioma consistente em todo o projeto — código, testes e mensagens de exceção. Os typos
+    <code>greatter</code> e <code>DEMAGED</code> não existem mais. <em>(Critério 13 do desafio 01,
+    finalmente.)</em></li>
+  <li>Os 9 comportamentos do balcão têm teste, e os testes vieram antes — provado pelos pares de
+    commits <code>test:</code> / <code>feat:</code>.</li>
+  <li>Existe pelo menos um commit <code>test:</code> que, em <code>git checkout</code>, faz
+    <code>mvn test</code> falhar.</li>
+  <li>Os empréstimos atrasados são testados sem depender do relógio da máquina.</li>
+  <li><code>java/04-colecoes-streams/acervo-da-quarentena/TDD.md</code> existe, com uma linha por
+    ciclo.</li>
+  <li><code>PLAN.md</code> responde: o que <code>&lt;scope&gt;test&lt;/scope&gt;</code> muda; o
+    que você viu no experimento do <code>@BeforeAll</code>; e se o parametrizado ficou melhor ou
+    pior que os oito testes separados.</li>
+  <li><strong><code>docs/ESTRUTURA.md</code>, na raiz do repositório</strong>, descreve a nova
+    estrutura Maven. Se você preferir manter também o <code>ESTRUTURA.md</code> local do desafio,
+    tudo bem — desde que os dois não se contradigam.</li>
+  <li><code>java/04-colecoes-streams/.serena/</code> e qualquer outro resíduo de ferramenta estão
+    ignorados ou removidos. Nada de artefato de build no commit.</li>
+</ol>
+
+<div class="caixa proibido">
+  <h4>O que não vale</h4>
+  <ul>
+    <li>Escrever a implementação do balcão e depois o teste, com os commits arrumados para
+      parecer TDD. Eu rodo os commits.</li>
+    <li>Fazer o Ato III antes do Ato I ou do Ato II.</li>
+    <li>Apagar, comentar ou afrouxar teste para ele passar. Você já enfrentou essa porta duas
+      vezes e escolheu certo nas duas.</li>
+    <li>Copiar um <code>pom.xml</code> de blog sem saber explicar cada bloco. No review, eu
+      pergunto o que cada um faz.</li>
+    <li>Pedir a implementação pronta ao Claude. Erro de build, "o que é
+      <code>dependencyManagement</code>", "por que meu teste não é encontrado": pode e deve
+      perguntar.</li>
+  </ul>
+</div>
+
+<h2>7. Bônus — depois que o principal estiver de pé</h2>
+
+<ul>
+  <li>Faça o <code>mvn test</code> <strong>falhar o build</strong> quando houver aviso do
+    compilador. Dica: <code>-Werror</code>. É assim que pipeline sério funciona.</li>
+  <li>Use <code>@Nested</code> para agrupar os testes do balcão por cenário (empréstimo,
+    devolução, atraso).</li>
+  <li>Adicione o plugin do <strong>PIT</strong> (<code>pitest-maven</code>) e rode
+    <code>mvn pitest:mutationCoverage</code>. É a ferramenta que faz automaticamente o que eu
+    venho fazendo à mão nos seus dois desafios. Compare o número dela com a sua intuição.</li>
+  <li>Transforme <code>Item</code> numa <code>sealed class</code>. O que o compilador passa a
+    garantir? O que você perde?</li>
+</ul>
+
+<h2>8. Por que este desafio existe</h2>
+
+<p>Duas coisas, e elas são independentes.</p>
+
+<p>A primeira é o Maven, e é a menor das duas. É configuração, você aprende em uma tarde, e a
+partir dela todo projeto Java do mundo passa a ter a mesma cara para você — inclusive o Spring,
+que é o próximo destino. Não é intelectualmente interessante; é infraestrutura, como tomada de
+parede.</p>
+
+<p>A segunda é a que importa. <strong>Escrever o teste antes muda o código que você escreve</strong>,
+e não dá para acreditar nisso por argumento — só sentindo. Quando o teste vem primeiro, você é
+obrigado a decidir como a sua classe vai ser <em>usada</em> antes de decidir como ela vai ser
+<em>feita</em>, e classes difíceis de testar viram óbvias cedo, quando ainda custa barato mudar.
+O comportamento 9 deste desafio foi desenhado exatamente para você bater nessa parede: você vai
+querer chamar <code>LocalDate.now()</code>, vai descobrir que não consegue testar, e vai
+inverter a dependência. Se o teste tivesse vindo depois, você teria escrito
+<code>LocalDate.now()</code>, testado o que fosse possível, e seguido a vida com um pedaço não
+testável no meio.</p>
+
+<p>No mercado isso é conversa de entrevista sênior, e cai quase sempre na mesma forma: "como você
+testaria uma regra que depende da data de hoje?". Quem responde "mudo o relógio da máquina" é
+júnior. Quem responde "injeto um <code>Clock</code>" acabou de dizer que entende inversão de
+dependência, e a conversa segue para Spring naturalmente. Você vai poder responder a segunda —
+e, melhor, vai ter batido a cabeça para chegar nela.</p>
+
+<blockquote>
+  <p>Código difícil de testar quase nunca é código com um problema de teste. É código com um
+  problema de desenho, avisando cedo.</p>
+</blockquote>
+
+<div class="rodape">
+  Mestre Yoda · Desafio 03 · Primeiro a pergunta. A resposta vem quando souber o que perguntou.
+</div>
+
+</body>
+</html>

@@ -1,14 +1,12 @@
+import java.util.Stack;
+
 public class Main {
     static void main(String[] args) {
-        try {
-            Vector names = new Vector(2);
+        Stack<String> stack = new Stack<String>();
 
-            names.add("manoel");
-            names.add("joana");
-            names.add("larissa");
-            names.add("ana");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        stack.push("Pagina 1");
+        stack.push("Pagina 2");
+        System.out.println(stack.pop());
+
     }
 }

@@ -63,29 +63,42 @@ public class StorageManagement {
                             "Escolha uma opcao acima: ");
             option = sc.nextInt();
 
-            if (option == 1) {
-                System.out.println("Digite o nome do produto");
-                String productName = sc.next();
+            switch (option) {
+                case 1: {
+                    System.out.println("Digite o nome do produto");
+                    String productName = sc.next();
 
-                System.out.println("Digite a quantidade do produto (" + productName + ")");
-                Integer productSize = sc.nextInt();
+                    System.out.println("Digite a quantidade do produto (" + productName + ")");
+                    Integer productSize = sc.nextInt();
 
-                System.out.println(addOrUpdate(productName, productSize));
-            } else if (option == 2) {
-                System.out.println("Digite o nome do produto que quer remover: ");
-                String productName = sc.next();
+                    System.out.println(addOrUpdate(productName, productSize));
+                    break;
+                }
+                case 2: {
+                    System.out.println("Digite o nome do produto que quer remover: ");
+                    String productName = sc.next();
 
-                System.out.println(removeProduct(productName));
-            } else if (option == 3) {
-                showAllProducts();
-            } else if (option == 4) {
-                System.out.println("Digite o nome do produto que deseja consultar: ");
-                String productName = sc.next();
-                getProduct(productName);
+                    System.out.println(removeProduct(productName));
+                    break;
+                }
+                case 3: {
+                    showAllProducts();
+                    break;
+                }
+                case 4: {
+                    System.out.println("Digite o nome do produto que deseja consultar: ");
+                    String productName = sc.next();
+                    getProduct(productName);
+                    break;
+                }
+                default: {
+                    System.out.println("Opção Invalida!!");
+                }
             }
 
 
-        } while (option != 0);
+        }
+        while (option != 0);
 
         sc.close();
         System.out.println("Finalizando....");

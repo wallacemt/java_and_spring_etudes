@@ -1,3 +1,5 @@
+package conjuntos;
+
 import javax.swing.*;
 import java.util.HashSet;
 

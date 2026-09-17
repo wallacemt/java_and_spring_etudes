@@ -1,4 +1,4 @@
-package Tree;
+package arvores.binaria;
 
 public class Tree {
     private Leaf leaf;

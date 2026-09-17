@@ -1,3 +1,5 @@
+package pilhas;
+
 public class StackArray {
 
     private int[] data;

@@ -1,4 +1,4 @@
-package DijkstraAlgoritm;
+package grafos.dijkstra;
 
 import java.security.InvalidParameterException;
 import java.util.*;

@@ -1,4 +1,4 @@
-package DijkstraAlgoritm;
+package grafos.dijkstra;
 
 import java.util.Scanner;
 

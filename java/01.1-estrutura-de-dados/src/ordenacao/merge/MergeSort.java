@@ -1,3 +1,5 @@
+package ordenacao.merge;
+
 public class MergeSort {
 
     public static void mergeSort(int[] arr) {

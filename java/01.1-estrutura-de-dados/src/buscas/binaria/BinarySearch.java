@@ -1,3 +1,5 @@
+package buscas.binaria;
+
 public class BinarySearch {
 
 

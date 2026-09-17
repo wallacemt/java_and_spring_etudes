@@ -1,3 +1,5 @@
+package vetores;
+
 public class VetorLongTest {
     //Tempo de execucao: 2445ms
     private static final int SIZE = 100000;

@@ -1,3 +1,5 @@
+package filas.prioridade;
+
 public class Task implements Comparable<Task> {
     String name;
     int priority;
